@@ -17,12 +17,15 @@
 - 2ª TENTATIVA (plano A): cp executou de verdade, MAS Permission denied → scoped storage:
   app (uid 10544) NÃO pode gravar direto em /sdcard/Download (sem permissão de storage/FUSE nega)
   OBS: "Error: Stream closed." aparece até após `ls` simples = RUÍDO do aShellYou (ignorar)
-- PLANO B (enviado ao usuário): pasta Android/media do próprio app (visível ao shell e a gerenciadores):
-  1) run-as com.hunter.net mkdir -p /sdcard/Android/media/com.hunter.net
-  2) run-as com.hunter.net find files -name "*.jar" -exec cp {} /sdcard/Android/media/com.hunter.net/liapp_payload.jar \;
-  3) run-as com.hunter.net ls -la /sdcard/Android/media/com.hunter.net/   (~15 MB esperado)
-  4) cp /sdcard/Android/media/com.hunter.net/liapp_payload.jar /sdcard/Download/liapp_payload.jar  (shell normal)
-  fallback C: Android/data/com.hunter.net/files/ (só o app escreve; tirar de lá via shell/files manager)
+- 3ª TENTATIVA (plano B): Android/media TAMBÉM Permission denied — e nem `mkdir /sdcard/Android` passa
+  → CONCLUSÃO: RevHunter não tem NENHUMA permissão de storage; Android 11+ nega todo /sdcard ao run-as
+  (run-as assume identidade do app; Shizuku não contorna). "Stream closed" segue sendo ruído do aShellYou
+- DECISÃO: migrar pull para ADB num netbook do usuário (CachyOS/Arch, Pentium N3710 — adb é leve, aguenta)
+  comando-chave (exec-out = canal binário USB, sem terminal-app e sem scoped storage):
+  `adb exec-out run-as com.hunter.net tar -cf - files > payload.tar` (pega tudo, sem digitar nome MUTF-8)
+  alternativa pontual: `adb exec-out run-as com.hunter.net cat files/.59bca860/ز֯٬ڲܮ.jar > liapp_payload.jar`
+  bônus: com adb no PC também dá `adb install -r v9.apk` e logcat limpo p/ os próximos testes
+  oferta em aberto: instalar ponte-local no netbook p/ eu operar o adb diretamente daqui
 - DIAGNÓSTICO: classloader da falha = PathClassLoader[base.apk, files/.59bca860/df2dda51/ز֯٬ڲܮ.jar]
   → LauncherActivity real não está nem nos 13 dexes visíveis (só canário MUTF-8) nem no jar montado
   → com assinatura diferente da original, o payload NÃO entrega classes reais (decifra corrompida/decoy)
