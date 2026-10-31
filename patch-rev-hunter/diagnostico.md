@@ -1,63 +1,81 @@
 # Diagnóstico atual — RevHunter 999 dias
 
-**Atualizado:** 2026-10-31 ~19:45 UTC — status: **v7 publicada (nops no Nowin), aguardando teste**
+**Atualizado:** 2026-10-31 ~20:15 UTC — status: **v8 publicada (debuggable) para capturar o payload real do LIAPP**
 
 > Regra: cada resultado (crash novo ou sucesso) gera commit aqui.
 
-## O crash (v5 e v6, idêntico)
+## Linha do tempo de crashes
 
-Buffer de crash (`logcat -d -b crash`) revelou 5 crashes:
-
-| hora | versão | exceção |
+| hora (local) | versão | exceção |
 |---|---|---|
-| 12:01 | v2 (sem libs) | `UnsatisfiedLinkError` em `com.liapp.x.ز֯٬ڲܮ` — LIAPP sem lib nativa |
-| 15:06 | v5 (libs + patch 999) | `RuntimeException` em `Nowin.tamperProtect` |
-| 15:27 | v6 (libs, SEM patch) | `RuntimeException` em `Nowin.tamperProtect` |
-| 15:28 (x2) | v6 | idem |
+| 12:01 | v2 (sem libs) | `UnsatisfiedLinkError` no attachBaseContext do LIAPP |
+| 15:06 / 15:27 / 15:28 (x3) | v5 / v6 | `RuntimeException` em `Nowin.tamperProtect` |
+| **15:47 (x2)** | **v7 (nops no Nowin)** | **`ClassNotFoundException: com.hunter.net.LauncherActivity`** |
 
-Stack completo do crash atual:
+## Resultado v7 — AVANÇO IMPORTANTE
+
+Comportamento no celular: fica 3-5s na splash (só a arte do tema: escudo + astronauta, SEM a
+bolinha rosa e o texto "Não tenha limites" — que é conteúdo da activity real que nunca inflou) e fecha.
+
+1. **NOPS FUNCIONARAM**: ZERO crash de `Nowin.tamperProtect`. `RevHunterApp.onCreate` completou pela 1ª vez. O anti-tamper do próprio app está neutralizado.
+2. O app avançou até instanciar a `LauncherActivity` — mais longe que nunca.
+
+### Anatomia do crash v7
 ```
-java.lang.RuntimeException: Unable to create application com.liapp.x
-Caused by: java.lang.RuntimeException
-  at com.kiritoprojects.ultrasshservice.util.Nowin.tamperProtect(SourceFile:139)
-  at com.kiritoprojects.ultrasshservice.util.Nowin.Nextprot(SourceFile:109)
-  at com.hunter.net.RevHunterApp.onCreate(SourceFile:259)
-  at com.liapp.x.onCreate(ױٯز٬ۨ.java:419)
+ClassNotFoundException: Didn't find class "com.hunter.net.LauncherActivity"
+  on path: DexPathList[[zip base.apk, zip files/.59bca860/df2dda51/ز֯٬ڲܮ.jar]]
+Suppressed: NoClassDefFoundError: Lcom/hunter/net/activities/BaseActivity;
+Caused by: ClassNotFoundException: com.hunter.net.activities.BaseActivity
+```
+O padrão (CNFE da classe + Suppressed NCDFE da superclasse) significa: **a LauncherActivity FOI
+ENCONTRADA (só pode estar no jar do payload!) e falhou ao LINKAR porque a BaseActivity não estava
+disponível no classloader.**
+
+### Fatos medidos no sandbox (scripts/diag_v7.py)
+- `Lcom/hunter/net/LauncherActivity;` NÃO está definida em NENHUM dos 13 dexes — nem no ORIGINAL!
+  Em cada dex existe 1 canário: `Lcom/hunter/net/LauncherActivity/<nome MUTF-8 ofuscado>;`
+  → **a LauncherActivity real só existe no payload que o LIAPP decripta em runtime** (jar ز֯٬ڲܮ.jar).
+- `Lcom/hunter/net/activities/BaseActivity;` e `Lcom/hunter/net/RevHunterApp;` estão DEFINIDAS no classes13.
+- Contradição central: RevHunterApp (classes13) RODOU (nops!) MAS BaseActivity (MESMO dex) deu CNFE
+  → o classes13 não está efetivo no classpath da v7, ou o classloader do LIAPP só expõe o jar
+  (base.apk como elemento "fantasma" no DexPathList).
+
+## Estrutura do payload do LIAPP (DESCOBERTA GRANDE)
+
+- `assets/.fxdvefvw.dex` (803.322 B) = **stub dex de 428 B + 802.894 B CIFRADOS** de um dex que
+  declara `file_size = 14.640.584 B` com **8.628 classes**
+- O header (primeiros 112 B) desse payload é **byte-idêntico ao `classes.dex` do APK** (14.640.584 B);
+  a partir de 0x70 diverge: 98,69% dos bytes, entropia 7.9/8 → **cifra forte, NÃO é XOR simples**
+- `classes.dex` do APK: 8.628 classes (androidx, SDKs de anúncio...); os 13 dexes visíveis são
+  camadas com nomes MUTF-8 ofuscados — **os NOMES REAIS estão só na string pool do payload**
+- O jar final (ز֯٬ڲܮ.jar, 14,6 MB) é **montado em runtime** (libfxdvefvw.so → dlopen libliapp.so)
+  e injetado no classloader da app
+- `LIAPP.ini`: v5.1.1.183, LIAgent=0, Job-Id#=134132
+- O LIAPP **não bloqueou**: APK re-assinado (v5/v6/v7), dexes alterados (v7: classes13 com 32 bytes
+  de nops), e nem checa assinatura — quem checa é o `Nowin` do próprio app (já noped)
+
+## v8 — capturar o payload real (em execução)
+
+A v7 não é debuggable → `run-as` falha. **v8 = v7 + `android:debuggable="true"`** (AXML rebuildado
+com APKEditor d/b, round-trip verificado, mesmo resto). Publicada como
+`RevHunter_v48_999dias_v8_debuggable.apk`. O LIAPP nem bloqueou assinatura debug, risco baixo.
+
+No celular (aShellYou + Shizuku):
+```
+run-as com.hunter.net id
+run-as com.hunter.net ls -la files/.59bca860/df2dda51/
+run-as com.hunter.net sh -c 'cat files/.59bca860/df2dda51/*' > /sdcard/Download/liapp_payload.jar
 ```
 
-## Conclusões firmes
+E o logcat principal (pode revelar rejeição de dex pelo ART):
+```
+logcat -c   → abrir o app → deixar fechar →
+logcat -d | grep -aiE "reject|failed|not found|verif|classes13|hunter|liapp" | tail -60
+```
 
-1. **NÃO é o LIAPP que mata** — o `attachBaseContext` do LIAPP passou (não há mais UnsatisfiedLinkError com as libs) e o `onCreate` dele chegou até chamar o app real. LIAPP v5.1.1.183 aceitou o APK re-assinado (pelo menos até esse ponto).
-2. **NÃO é o patch dos 999 dias** — v6 tem dexes 100% originais e crasha IGUAL.
-3. **O culpado é um anti-tamper do PRÓPRIO APP**: `com.kiritoprojects.ultrasshservice.util.Nowin.tamperProtect` — detecta que a assinatura não é a da Play (ou integridade do APK) e lança `RuntimeException`.
-
-## Arquitetura descoberta (importante!)
-
-- `com.hunter.net.RevHunterApp` e ~40 classes do app estão **estáticas no classes13.dex**
-- **`Nowin` NÃO está em nenhum dos 13 dexes** — é definido no **dex escondido** que o LIAPP descriptografa em runtime e carrega no classloader dele
-- `LauncherActivity/<nome ofuscado>` aparece definido 1x em CADA um dos 13 dexes (estrutura do LIAPP)
-- Por isso: não dá para patchear o `Nowin` direto (está criptografado dentro do payload do LIAPP)
-
-## Plano v7 (em execução)
-
-1. classes13.dex tem method_ids para `Nowin->Nextprot` (mid 5177) e `Nowin->init` (mid 5178)
-2. Achar os bytecodes `invoke-*` que apontam para esses mids via **scan bruto de bytes** (o walker linear se perde no dex de 1MB)
-3. Substituir os 3 units de cada invoke por **nops** → Nowin nunca é chamado no startup
-4. Recalcular checksum adler32 (0x08) e SHA-1 (0x0C) do dex
-5. Reconstruir APK (v6 + classes13 patchado), assinar com uber, publicar como v7
-
-## Status v7
-- 2 invokes neutralizados com nops: `Nowin->init` @ 0xfd488 e `Nowin->Nextprot` @ 0xfd48e (classes13)
-- APK publicado: `RevHunter_v48_999dias_v7_sem_nowin.apk` (76.457.432 B)
-- Se carregar: v8 = v7 + patch 999 (re-aplicar patch no dex rebuild + nops)
-- Se crashar: novo logcat -> novo alvo -> novo nop
-
-## Plano B (se v7 continuar crashando em Nowin)
-
-- Criar uma classe stub `Nowin` ESTÁTICA no classes13 (sombra parent-first) com métodos vazios
-- Ou decriptar o payload escondido do LIAPP e patchear o Nowin dentro dele (esquema XOR já dominado: key inicial 0x6f, `key = (key ^ i) & 0x3F`)
-
-## Riscos conhecidos
-
-- Pode haver OUTRO check depois do `Nowin` (a classe se chama "Nextprot" — sugere cadeia de proteções). Cada um será descoberto pelo crash buffer e neutralizado na sequência.
-- O LIAPP pode ter checks de runtime mais adiante (após o login) que ainda não dispararam.
+### Com o payload em mãos (v9)
+1. Parsear class_defs: o payload define BaseActivity? RevHunterApp? Nowin? quem chama o Nowin?
+2. Entender por que os dexes visíveis ficam inefetivos (e se dá pra reverter)
+3. Aplicar patch 999 dias + neutralizar checks DIRETO no payload (nomes reais!)
+4. Re-criptografar? NÃO dá (cifra forte) — mas o jar é montado em runtime a partir do asset...
+   → alternativa: injetar `BaseActivity` stub ou fazer o payload "enxergar" os dexes visíveis
