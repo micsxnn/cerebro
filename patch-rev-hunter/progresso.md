@@ -1,12 +1,15 @@
 # WORKLOG — RevHunter v48 (com.hunter.net) — 999 dias
 
-## Última atualização: 2026-10-31 ~19:35 UTC
+## Última atualização: 2026-10-31 ~20:15 UTC
 
 ## Estado atual
-- v6 PUBLICADA no release `v1-999dias` (release id 429680551):
-  `RevHunter_v48_v6_TESTE_dexes_originais.apk` (75.671.000 B) — AGUARDANDO TESTE
-  = APKEditor merge(testA + 3 splits), classes13 ORIGINAL crc 2b2bd529, 18 libs
-  URL: https://github.com/micsxnn/analise-revhunter-tempo-restante/releases/download/v1-999dias/RevHunter_v48_v6_TESTE_dexes_originais.apk
+- v8 PUBLICADA (release id 429680551): `RevHunter_v48_999dias_v8_debuggable.apk` (76.457.432 B)
+  = v7 + android:debuggable="true" (AXML rebuildado via APKEditor d/b, round-trip verificado)
+  OBJETIVO v8: liberar run-as p/ capturar o payload real do LIAPP (jar ز֯٬ڲܮ.jar) em files/
+  URL: https://github.com/micsxnn/analise-revhunter-tempo-restante/releases/download/v1-999dias/RevHunter_v48_999dias_v8_debuggable.apk
+- v7 TESTADA (15:47 local x2): AVANÇOU — nops no Nowin FUNCIONARAM (zero tamperProtect),
+  RevHunterApp.onCreate completou, splash 3-5s (sem bolinha/"Não tenha limites") e crashou:
+  ClassNotFoundException com.hunter.net.LauncherActivity + Suppressed NCDFE BaseActivity
 
 ## Resultados dos testes no celular
 | versão | conteúdo | resultado |
@@ -24,11 +27,32 @@ O código do patch 999 dias NUNCA rodou de verdade (v2/v3 morriam antes). Crash 
 2. Anti-tamper do LIAPP (assinatura debug ≠ Play, ou CRC de dex)
 → v6 (dexes 100% originais) decide: se v6 carregar = patch é o culpado; se v6 crashar = anti-tamper LIAPP
 
-## Próximos passos
-1. Usuário: desinstalar v5 → instalar v6 → testar
-2. Usuário: se crashar, rodar `logcat -d -b crash -t 200` (buffer de crashes é separado; guarda crashes antigos)
-3. Se v6 carregar → analisar diff dec_c13_orig vs dec_c13_patch e corrigir o patch
-4. Se v6 crashar → baksmali do hidden.dex (dex escondido LIAPP assets/.fxdvefvw.dex) e procurar check de assinatura; re-criptografia XOR já dominada (key 0x6f, key=(key^i)&0x3F)
+## Resultado v7 (2026-10-31 ~19:47 UTC)
+- v7 AVANÇOU: nops no Nowin funcionaram — ZERO crash de tamperProtect; RevHunterApp.onCreate completou pela 1ª vez
+- Ficou 3-5s na splash (arte do tema SEM bolinha/"Não tenha limites" = activity real nunca inflou) e fechou
+- Crash novo (15:47 x2): ClassNotFoundException com.hunter.net.LauncherActivity
+  + Suppressed NoClassDefFoundError com.hunter.net.activities.BaseActivity
+- Padrão do stack = LauncherActivity FOI ACHADA (só pode ser no jar ز֯٬ڲܮ.jar do payload!) e falhou ao LINKAR a superclasse BaseActivity
+- MEAÇÃO LOCAL (diag_v7.py): LauncherActivity real NÃO está em NENHUM dos 13 dexes (só 1 canário ofuscado por dex: Lcom/hunter/net/LauncherActivity/<MUTF-8>;) — nem no original!
+- BaseActivity e RevHunterApp estão DEFINIDAS no classes13; RevHunterApp rodou MAS BaseActivity não achada → classes13 não efetivo no classloader (ou classloader do LIAPP só tem o jar)
+
+## Payload do LIAPP (DESCOBERTA GRANDE, 2026-10-31 ~20:05 UTC)
+- assets/.fxdvefvw.dex (803.322 B) = stub dex 428 B + 802.894 B CIFRADOS de um dex que declara file_size 14.640.584 B / 8.628 classes
+- Header (primeiros 112 B) do payload = byte-idêntico ao classes.dex do APK (14.640.584 B); a partir de 0x70 diverge (98,69%, entropia 7.9/8 = cifra forte, NÃO é XOR simples)
+- classes.dex do APK: 8.628 classes (androidx, ads SDKs); cada dex visível é camada com nomes MUTF-8 ofuscados
+- O jar final (ز֯٬ڲܮ.jar, 14,6 MB) é MONTADO EM RUNTIME (libfxdvefvw.so dlopen libliapp.so) e injetado no classloader [base.apk, jar]
+- LIAPP.ini: v5.1.1.183, LIAgent=0, Job-Id#=134132
+- CONCLUSÃO: nomes REAIS das classes (LauncherActivity, Nowin...) só existem no payload decriptado
+- Maneta: run-as exige debuggable → v8 = v7 + debuggable=true (LIAPP nem bloqueou assinatura debug, risco baixo)
+
+## Próximos passos (v8 em execução)
+1. Usuário: instalar v8 (debuggable) → abrir (vai crashar igual, tudo bem) → pegar payload:
+   - `run-as com.hunter.net id` (testa)
+   - `run-as com.hunter.net ls -la files/.59bca860/df2dda51/`
+   - `run-as com.hunter.net sh -c 'cat files/.59bca860/df2dda51/*' > /sdcard/Download/liapp_payload.jar`
+2. Usuário: logcat ART (pode revelar rejeição de dex/classes13): `logcat -c` → abrir app → fechar → `logcat -d | grep -aiE "reject|failed|not found|verif|classes13|hunter|liapp" | tail -60`
+3. Sandbox: parsear liapp_payload.jar → class_defs (BaseActivity? RevHunterApp? Nowin? callsites?)
+4. v9 = patch no payload (999 dias + checks) OU injeção de BaseActivity stub
 5. Ao final: restaurar `settings put global verifier_verify_adb_installs 1` e `package_verifier_enable 1`
 
 ## Ferramentas
