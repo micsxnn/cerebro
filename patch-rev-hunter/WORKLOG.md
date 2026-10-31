@@ -134,3 +134,11 @@ Fonte: aShellYou__20261031161811.txt (anexo do usuário; cópia em patch-rev-hun
 6. AVANÇO CHAVE: agora o payload está ALCANÇÁVEL via run-as (v8 debuggable) — falta só o cp corrigido:
    `run-as com.hunter.net find files -name "*.jar" -exec cp {} /sdcard/Download/liapp_payload.jar \;`
    (fallback: /sdcard/Android/data/com.hunter.net/files/ — ver docs do cérebro)
+
+## Ponte-local (2026-10-31 21:21 local) — INSTALADA E VALIDADA
+- Relay Next.js 16.4.3 em /home/z/my-project/ponte-relay (arquivos 100% idênticos à skill ponte-local; cacheComponents:false; tokens em .env.local chmod 600)
+- URL pública VALIDADA (HTTP 200, mesmo JSON): preview-chat-<chat_id>.space-z.ai — status e /api/ponte/download OK
+- Ciclo completo testado na VM com agente de teste (canal test): ponte.py ping → OK (1 ms, agent 1.3.0)
+- Operador: scripts/ponte.py (env em rea-work/ponte/env.sh); reerguer relay: scripts/ponte_up.sh (sandbox recicla processos entre mensagens; agente reconecta sozinho)
+- Pendente: usuário instalar agente no netbook (CachyOS): pacman nodejs/curl/android-tools + node agent.js --auto --save
+- Guia completo (sem tokens): rea-work/docs/2026-10-31_ponte_instalada_guia_netbook.md → publicado em patch-rev-hunter/ponte/GUIA-PONTE.md
