@@ -1,0 +1,163 @@
+$ logcat -d -b crash -t 200
+--------- beginning of crash
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: FATAL EXCEPTION: main
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: Process: com.hunter.net, PID: 24588
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: java.lang.UnsatisfiedLinkError: No implementation found for java.lang.String com.liapp.x.ز֯٬ڲܮ(android.content.Context, java.lang.String, java.lang.String, int, int, int, android.content.Context, android.app.Application, java.lang.Object) (tried Java_com_liapp_x__00632_005af_0066c_006b2_0072e and Java_com_liapp_x__00632_005af_0066c_006b2_0072e__Landroid_content_Context_2Ljava_lang_String_2Ljava_lang_String_2IIILandroid_content_Context_2Landroid_app_Application_2Ljava_lang_Object_2)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at com.liapp.x.ز֯٬ڲܮ(Native Method)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at com.liapp.x.ݮݮڱܯޫ(ױٯز٬ۨ.java:336)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at com.liapp.x.attachBaseContext(ױٯز٬ۨ.java:175)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at android.app.Application.attach(Application.java:351)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at android.app.Instrumentation.newApplication(Instrumentation.java:1159)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at android.app.LoadedApk.makeApplication(LoadedApk.java:1268)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6889)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at android.app.ActivityThread.access$1300(ActivityThread.java:260)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1955)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:223)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:7955)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:603)
+10-31 12:01:40.365 24588 24588 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: FATAL EXCEPTION: main
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: Process: com.hunter.net, PID: 12711
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: java.lang.RuntimeException: Unable to create application com.liapp.x: java.lang.RuntimeException
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6929)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at android.app.ActivityThread.access$1300(ActivityThread.java:260)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1955)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:223)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:7955)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:603)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: Caused by: java.lang.RuntimeException
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at com.kiritoprojects.ultrasshservice.util.Nowin.tamperProtect(SourceFile:139)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at com.kiritoprojects.ultrasshservice.util.Nowin.Nextprot(SourceFile:109)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at com.hunter.net.RevHunterApp.onCreate(SourceFile:259)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at com.liapp.x.onCreate(ױٯز٬ۨ.java:419)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1192)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6923)
+10-31 15:06:49.609 12711 12711 E AndroidRuntime: 	... 8 more
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: FATAL EXCEPTION: main
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: Process: com.hunter.net, PID: 30725
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: java.lang.RuntimeException: Unable to create application com.liapp.x: java.lang.RuntimeException
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6929)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at android.app.ActivityThread.access$1300(ActivityThread.java:260)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1955)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:223)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:7955)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:603)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: Caused by: java.lang.RuntimeException
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at com.kiritoprojects.ultrasshservice.util.Nowin.tamperProtect(SourceFile:139)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at com.kiritoprojects.ultrasshservice.util.Nowin.Nextprot(SourceFile:109)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at com.hunter.net.RevHunterApp.onCreate(SourceFile:259)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at com.liapp.x.onCreate(ױٯز٬ۨ.java:419)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1192)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6923)
+10-31 15:27:11.943 30725 30725 E AndroidRuntime: 	... 8 more
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: FATAL EXCEPTION: main
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: Process: com.hunter.net, PID: 32247
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: java.lang.RuntimeException: Unable to create application com.liapp.x: java.lang.RuntimeException
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6929)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at android.app.ActivityThread.access$1300(ActivityThread.java:260)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1955)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:223)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:7955)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:603)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: Caused by: java.lang.RuntimeException
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at com.kiritoprojects.ultrasshservice.util.Nowin.tamperProtect(SourceFile:139)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at com.kiritoprojects.ultrasshservice.util.Nowin.Nextprot(SourceFile:109)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at com.hunter.net.RevHunterApp.onCreate(SourceFile:259)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at com.liapp.x.onCreate(ױٯز٬ۨ.java:419)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1192)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6923)
+10-31 15:28:12.259 32247 32247 E AndroidRuntime: 	... 8 more
+10-31 15:28:17.748   784   784 E AndroidRuntime: FATAL EXCEPTION: main
+10-31 15:28:17.748   784   784 E AndroidRuntime: Process: com.hunter.net, PID: 784
+10-31 15:28:17.748   784   784 E AndroidRuntime: java.lang.RuntimeException: Unable to create application com.liapp.x: java.lang.RuntimeException
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6929)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at android.app.ActivityThread.access$1300(ActivityThread.java:260)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1955)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:223)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:7955)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:603)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
+10-31 15:28:17.748   784   784 E AndroidRuntime: Caused by: java.lang.RuntimeException
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at com.kiritoprojects.ultrasshservice.util.Nowin.tamperProtect(SourceFile:139)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at com.kiritoprojects.ultrasshservice.util.Nowin.Nextprot(SourceFile:109)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at com.hunter.net.RevHunterApp.onCreate(SourceFile:259)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at com.liapp.x.onCreate(ױٯز٬ۨ.java:419)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at android.app.Instrumentation.callApplicationOnCreate(Instrumentation.java:1192)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6923)
+10-31 15:28:17.748   784   784 E AndroidRuntime: 	... 8 more
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: FATAL EXCEPTION: main
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: Process: com.hunter.net, PID: 19561
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: java.lang.RuntimeException: Unable to instantiate activity ComponentInfo{com.hunter.net/com.hunter.net.LauncherActivity}: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.LauncherActivity" on path: DexPathList[[zip file "/data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/lib/arm64, /data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3398)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3683)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:85)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:135)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:95)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2108)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:223)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:7955)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:603)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: Caused by: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.LauncherActivity" on path: DexPathList[[zip file "/data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/lib/arm64, /data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:207)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at java.lang.ClassLoader.loadClass(ClassLoader.java:379)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.app.AppComponentFactory.instantiateActivity(AppComponentFactory.java:95)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at androidx.core.app.CoreComponentFactory.instantiateActivity(SourceFile:1)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.app.Instrumentation.newActivity(Instrumentation.java:1253)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3385)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	... 11 more
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	Suppressed: java.lang.NoClassDefFoundError: Failed resolution of: Lcom/hunter/net/activities/BaseActivity;
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 		at java.lang.VMClassLoader.findLoadedClass(Native Method)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 		at java.lang.ClassLoader.findLoadedClass(ClassLoader.java:738)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 		at java.lang.ClassLoader.loadClass(ClassLoader.java:363)
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 		... 16 more
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 	Caused by: java.lang.ClassNotFoundException: com.hunter.net.activities.BaseActivity
+10-31 15:47:26.344 19561 19561 E AndroidRuntime: 		... 19 more
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: FATAL EXCEPTION: main
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: Process: com.hunter.net, PID: 20132
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: java.lang.RuntimeException: Unable to instantiate activity ComponentInfo{com.hunter.net/com.hunter.net.LauncherActivity}: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.LauncherActivity" on path: DexPathList[[zip file "/data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/lib/arm64, /data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3398)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.app.ActivityThread.handleLaunchActivity(ActivityThread.java:3683)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.app.servertransaction.LaunchActivityItem.execute(LaunchActivityItem.java:85)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.executeCallbacks(TransactionExecutor.java:135)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.app.servertransaction.TransactionExecutor.execute(TransactionExecutor.java:95)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:2108)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:223)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:7955)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:603)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: Caused by: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.LauncherActivity" on path: DexPathList[[zip file "/data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/lib/arm64, /data/app/~~FmUBnb8gBgeJAA7Z-5t3hQ==/com.hunter.net-FDaDgTS2xpixaerTGGayDw==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at dalvik.system.BaseDexClassLoader.findClass(BaseDexClassLoader.java:207)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at java.lang.ClassLoader.loadClass(ClassLoader.java:379)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at java.lang.ClassLoader.loadClass(ClassLoader.java:312)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.app.AppComponentFactory.instantiateActivity(AppComponentFactory.java:95)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at androidx.core.app.CoreComponentFactory.instantiateActivity(SourceFile:1)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.app.Instrumentation.newActivity(Instrumentation.java:1253)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	at android.app.ActivityThread.performLaunchActivity(ActivityThread.java:3385)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	... 11 more
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	Suppressed: java.lang.NoClassDefFoundError: Failed resolution of: Lcom/hunter/net/activities/BaseActivity;
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 		at java.lang.VMClassLoader.findLoadedClass(Native Method)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 		at java.lang.ClassLoader.findLoadedClass(ClassLoader.java:738)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 		at java.lang.ClassLoader.loadClass(ClassLoader.java:363)
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 		... 16 more
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 	Caused by: java.lang.ClassNotFoundException: com.hunter.net.activities.BaseActivity
+10-31 15:47:35.607 20132 20132 E AndroidRuntime: 		... 19 more
+
