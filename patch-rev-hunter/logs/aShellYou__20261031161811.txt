@@ -1,0 +1,74 @@
+$ run-as com.hunter.net id
+uid=10544(u0_a544) gid=10544(u0_a544) groups=10544(u0_a544),1004(input),1007(log),1011(adb),1015(sdcard_rw),1028(sdcard_r),1078(ext_data_rw),1079(ext_obb_rw),3001(net_bt_admin),3002(net_bt),3003(inet),3006(net_bw_stats),3009(readproc),3011(uhid),50544(all_a544) context=u:r:runas_app:s0:c32,c258,c512,c768
+
+$ run-as com.hunter.net find files -name "*.jar"
+files/.59bca860/ز֯٬ڲܮ.jar
+
+$ run-as com.hunter.net sh -c 'cat $(find files -name "*.jar" | head -1)' > /sdcard/Download/liapp_payload.jar
+Error: Stream closed.
+
+$ run-as com.hunter.net sh -c 'cat $(find files -name "*.jar" | head -1)' > /sdcard/Download/liapp_payload.jar
+Error: Stream closed.
+
+$ logcat -d | grep -aiE "reject|failed|not found|verif|classes13|hunter|liapp" | tail -60
+10-31 16:17:55.988 21250 21452 W System.err: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.RevHunterApp" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:55.988 21250 21452 W System.err: 	at com.liapp.x.۱٬ڱܯޫ(ױٯز٬ۨ.java:539)
+10-31 16:17:55.988 21250 21452 W System.err: 	at com.liapp.x.getApplicationContext(ױٯز٬ۨ.java:1448)
+10-31 16:17:55.988 21250 21250 W System.err: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.RevHunterApp" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:55.988 21250 21250 W System.err: 	at com.liapp.x.۱٬ڱܯޫ(ױٯز٬ۨ.java:539)
+10-31 16:17:55.988 21250 21250 W System.err: 	at com.liapp.x.getApplicationContext(ױٯز٬ۨ.java:1448)
+10-31 16:17:56.008 21250 21250 W System.err: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.RevHunterApp" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:56.008 21250 21250 W System.err: 	at com.liapp.x.۱٬ڱܯޫ(ױٯز٬ۨ.java:539)
+10-31 16:17:56.008 21250 21250 W System.err: 	at com.liapp.x.onCreate(ױٯز٬ۨ.java:410)
+10-31 16:17:56.017 21250 21250 W Thread-11: type=1400 audit(0.0:67014): avc: denied { read } for name="u:object_r:last_boot_reason_prop:s0" dev="tmpfs" ino=7435 scontext=u:r:untrusted_app:s0:c32,c258,c512,c768 tcontext=u:object_r:last_boot_reason_prop:s0 tclass=file permissive=0 app=com.hunter.net
+10-31 16:17:56.019 21250 21250 W System.err: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.RevHunterApp" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:56.019 21250 21250 W System.err: 	at com.liapp.x.۱٬ڱܯޫ(ױٯز٬ۨ.java:539)
+10-31 16:17:56.020 21250 21250 W System.err: 	at com.liapp.x.getApplicationContext(ױٯز٬ۨ.java:1448)
+10-31 16:17:56.035 21250 21250 E AndroidRuntime: Process: com.hunter.net, PID: 21250
+10-31 16:17:56.035 21250 21250 E AndroidRuntime: java.lang.RuntimeException: Unable to instantiate activity ComponentInfo{com.hunter.net/com.hunter.net.LauncherActivity}: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.LauncherActivity" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:56.035 21250 21250 E AndroidRuntime: Caused by: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.LauncherActivity" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:56.035 21250 21250 E AndroidRuntime: 	Suppressed: java.lang.NoClassDefFoundError: Failed resolution of: Lcom/hunter/net/activities/BaseActivity;
+10-31 16:17:56.035 21250 21250 E AndroidRuntime: 	Caused by: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.activities.BaseActivity" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:56.099 21331 21442 D CCE     : Settings pattern not found
+10-31 16:17:56.205 21250 21452 I com.hunter.net: Waiting for a blocking GC ClassLinker
+10-31 16:17:56.209 21250 21250 W com.hunter.net: type=1400 audit(0.0:67015): avc: denied { read } for comm=466972656261736520426C6F636B69 name="module" dev="sysfs" ino=11097 scontext=u:r:untrusted_app:s0:c32,c258,c512,c768 tcontext=u:object_r:sysfs:s0 tclass=dir permissive=0 app=com.hunter.net
+10-31 16:17:56.245 21250 21250 W com.hunter.net: type=1400 audit(0.0:67016): avc: denied { read } for comm=466972656261736520426C6F636B69 name="module" dev="sysfs" ino=11097 scontext=u:r:untrusted_app:s0:c32,c258,c512,c768 tcontext=u:object_r:sysfs:s0 tclass=dir permissive=0 app=com.hunter.net
+10-31 16:17:56.257 21250 21452 I com.hunter.net: WaitForGcToComplete blocked ClassLinker on ClassLinker for 52.005ms
+10-31 16:17:56.277 21250 21452 W System.err: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.RevHunterApp" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:56.278 21250 21452 W System.err: 	at com.liapp.x.۱٬ڱܯޫ(ױٯز٬ۨ.java:539)
+10-31 16:17:56.278 21250 21452 W System.err: 	at com.liapp.x.getApplicationContext(ױٯز٬ۨ.java:1448)
+10-31 16:17:56.279 21250 21452 W System.err: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.RevHunterApp" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:56.279 21250 21452 W System.err: 	at com.liapp.x.۱٬ڱܯޫ(ױٯز٬ۨ.java:539)
+10-31 16:17:56.279 21250 21452 W System.err: 	at com.liapp.x.getApplicationContext(ױٯز٬ۨ.java:1448)
+10-31 16:17:56.285 21250 21452 W System.err: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.RevHunterApp" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:56.285 21250 21452 W System.err: 	at com.liapp.x.۱٬ڱܯޫ(ױٯز٬ۨ.java:539)
+10-31 16:17:56.285 21250 21452 W System.err: 	at com.liapp.x.getApplicationContext(ױٯز٬ۨ.java:1448)
+10-31 16:17:56.300 21250 21452 W System.err: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.RevHunterApp" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:56.300 21250 21452 W System.err: 	at com.liapp.x.۱٬ڱܯޫ(ױٯز٬ۨ.java:539)
+10-31 16:17:56.300 21250 21452 W System.err: 	at com.liapp.x.getApplicationContext(ױٯز٬ۨ.java:1448)
+10-31 16:17:56.302 21250 21452 W System.err: java.lang.ClassNotFoundException: Didn't find class "com.hunter.net.RevHunterApp" on path: DexPathList[[zip file "/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk", zip file "/data/user/0/com.hunter.net/files/.59bca860/df2dda51/ز֯٬ڲܮ.jar"],nativeLibraryDirectories=[/data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/lib/arm64, /data/app/~~8nyUytuXEy2cN2sPdD49UA==/com.hunter.net-XN84HBhuXsSz6ogxFPQaoA==/base.apk!/lib/arm64-v8a, /system/lib64, /system_ext/lib64]]
+10-31 16:17:56.302 21250 21452 W System.err: 	at com.liapp.x.۱٬ڱܯޫ(ױٯز٬ۨ.java:539)
+10-31 16:17:56.302 21250 21452 W System.err: 	at com.liapp.x.getApplicationContext(ױٯز٬ۨ.java:1448)
+10-31 16:17:56.307 21331 21345 W System  : A resource failed to call close. 
+10-31 16:17:56.310 21486 21486 E BlurMotherFrameworkDeps: failed to register tag for checkin logging
+10-31 16:17:56.372   939  1633 W ActivityTaskManager:   Force finishing activity com.hunter.net/.LauncherActivity
+10-31 16:17:56.373   939  1633 D WindowManager:  update app focus from ActivityRecord{3e086d2 u0 com.hunter.net/.LauncherActivity t150 f}} to ActivityRecord{2ded500 u0 com.motorola.launcher3/com.android.launcher3.CustomizationPanelLauncher t5}
+10-31 16:17:56.481 21486 21486 E BlurMotherFrameworkDeps: failed to register tag for checkin logging
+10-31 16:17:56.483   939  2738 I ActivityManager: Process com.hunter.net (pid 21250) has died: fg  TOP 
+10-31 16:17:56.483   939  2738 V ActivityManager: Clean up application record for ProcessRecord{81993a3 21250:com.hunter.net/u0a544} restarting=false allowRestart=true index=-1 replacingPid=false
+10-31 16:17:56.487   939  2738 V ActivityTaskManager: App died while pausing: ActivityRecord{3e086d2 u0 com.hunter.net/.LauncherActivity t150 f}}
+10-31 16:17:56.504   939   961 W WindowManager: Failed looking up window session=Session{c5c0229 939:1000} callers=com.android.server.wm.WindowManagerService.windowForClientLocked:5560 com.android.server.wm.WindowManagerService.removeWindow:1975 com.android.server.wm.Session.remove:193 
+10-31 16:17:56.534 15247 18272 W libEGL  : EGLNativeWindowType 0xb400007b30bc5cd0 disconnect failed
+10-31 16:17:56.618  1845  1845 D AppFlowHandler: checkShutUpRestore: old=com.hunter.net, new=com.motorola.launcher3
+10-31 16:17:56.626   939  1215 D performance: LRU skip stop: {in.hridayan.ashell=idleTime, com.google.android.providers.media.module=adj<=200, com.android.vending=adj<=200, com.google.android.gms=adj<=200, com.hunter.net=focus, com.instagram.android=favorite, com.google.android.apps.messaging=adj<=200, com.chrome.dev=idleTime, com.android.phone=adj<=200, com.google.android.googlequicksearchbox=adj<=200, com.google.android.packageinstaller=idleTime, com.sameerasw.essentials=inputMethods, com.android.systemui=wallpaper, com.truedevelopersstudio.automatictap.autoclicker=adj<=200, com.google.android.inputmethod.latin=inputMethods, com.happymod.apk=foreground service, flar2.devcheck=adj<=200}, swapKill: -1
+10-31 16:17:56.875   939   960 W ActivityTaskManager: Activity top resumed state loss timeout for ActivityRecord{3e086d2 u0 com.hunter.net/.LauncherActivity t-1 f}}
+10-31 16:17:57.607 21331 21475 E ActivityThread: Failed to find provider info for com.motorola.ccc.cce.datausage
+10-31 16:17:57.647 21331 21515 E ActivityThread: Failed to find provider info for com.motorola.ccc.cce.datausage
+10-31 16:17:57.902  1686  2859 D CustomAppIcons: Get custom app icon: android.app.Application@202a43a | com.hunter.net | com.hunter.net.launcheractivity
+10-31 16:17:57.903  1686  2859 D CustomAppIcons: Icon from CustomAppIcons: com.hunter.net | com.hunter.net.launcheractivity | null
+10-31 16:17:57.910  1686  2859 D CustomAppIcons: Get custom app icon: android.app.Application@202a43a | com.hunter.net | com.hunter.net.launcheractivity
+10-31 16:17:57.910  1686  2859 D CustomAppIcons: Icon from CustomAppIcons: com.hunter.net | com.hunter.net.launcheractivity | null
+10-31 16:18:01.204 15247 18272 W libEGL  : EGLNativeWindowType 0xb400007b30bc5cd0 disconnect failed
+10-31 16:18:01.207  1686  2915 W libEGL  : EGLNativeWindowType 0xb400007b30f151b0 disconnect failed
+10-31 16:18:03.360  2570  2749 W libEGL  : EGLNativeWindowType 0xb400007b30dd5c50 disconnect failed
+
