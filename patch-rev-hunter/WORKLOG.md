@@ -3,7 +3,7 @@
 ## Última atualização: 2026-10-31 ~21:45 UTC
 
 ## Estado atual
-- CÉRBERO CRIADO/ATIVO: repo renomeado micsxnn/cerebro -> **micsxnn/cerbero** (GitHub não aceita acento)
+- CÉREBRO ATIVO: repo do projeto = **micsxnn/cerebro** (já existia, mantido; breve confusão com "cerbero" revertida)
   pasta patch-rev-hunter/ (WORKLOG.md, diagnostico.md, progresso.md, logs/); REGRA: TODA falha/sucesso -> commit lá
 - v8 TESTADA (16:17 local): `run-as com.hunter.net id` FUNCIONA (uid 10544) = debuggable OK ✅;
   crash = MESMO padrão v7: CNFE RevHunterApp (tratadas, de com.liapp.x.getApplicationContext:1448/onCreate:410)
@@ -116,4 +116,4 @@ Fonte: aShellYou__20261031161811.txt (anexo do usuário; cópia em patch-rev-hun
 5. Interpretação: fecha o diagnóstico — em APK re-assinado, o jar montado a partir do payload cifrado NÃO entrega as classes reais (LauncherActivity etc. só existem no payload de 14,6 MB); com assinatura original ele entrega (app original funciona). RevHunterApp/BaseActivity existem no classes13 visível, mas o lookup final também falha → LIAPP controla o classloader pós-attach (v7 provou que o bytecode do classes13 visível RODA: os nops no Nowin mudaram o comportamento)
 6. AVANÇO CHAVE: agora o payload está ALCANÇÁVEL via run-as (v8 debuggable) — falta só o cp corrigido:
    `run-as com.hunter.net find files -name "*.jar" -exec cp {} /sdcard/Download/liapp_payload.jar \;`
-   (fallback: /sdcard/Android/data/com.hunter.net/files/ — ver docs do cerbero)
+   (fallback: /sdcard/Android/data/com.hunter.net/files/ — ver docs do cérebro)
