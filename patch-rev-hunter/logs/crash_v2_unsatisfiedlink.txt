@@ -1,0 +1,19 @@
+--------- beginning of crash
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: FATAL EXCEPTION: main
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: Process: com.hunter.net, PID: 5197
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: java.lang.UnsatisfiedLinkError: No implementation found for java.lang.String com.liapp.x.ز֯٬ڲܮ(android.content.Context, java.lang.String, java.lang.String, int, int, int, android.content.Context, android.app.Application, java.lang.Object) (tried Java_com_liapp_x__00632_005af_0066c_006b2_0072e and Java_com_liapp_x__00632_005af_0066c_006b2_0072e__Landroid_content_Context_2Ljava_lang_String_2Ljava_lang_String_2IIILandroid_content_Context_2Landroid_app_Application_2Ljava_lang_Object_2)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at com.liapp.x.ز֯٬ڲܮ(Native Method)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at com.liapp.x.ݮݮڱܯޫ(ױٯز٬ۨ.java:336)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at com.liapp.x.attachBaseContext(ױٯز٬ۨ.java:175)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at android.app.Application.attach(Application.java:351)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at android.app.Instrumentation.newApplication(Instrumentation.java:1159)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at android.app.LoadedApk.makeApplication(LoadedApk.java:1268)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at android.app.ActivityThread.handleBindApplication(ActivityThread.java:6889)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at android.app.ActivityThread.access$1300(ActivityThread.java:260)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at android.app.ActivityThread$H.handleMessage(ActivityThread.java:1955)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at android.os.Handler.dispatchMessage(Handler.java:106)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at android.os.Looper.loop(Looper.java:223)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at android.app.ActivityThread.main(ActivityThread.java:7955)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at java.lang.reflect.Method.invoke(Native Method)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:603)
+10-31 00:59:36.869  5197  5197 E AndroidRuntime: 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:947)
