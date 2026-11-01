@@ -1,6 +1,13 @@
 # WORKLOG — RevHunter v48 (com.hunter.net) — 999 dias
 
-## Última atualização: 2026-10-31 ~20:15 UTC
+## Última atualização: 2026-11-01
+
+## Mudança de rota (2026-11-01) — CELULAR FORA, VM ANDROID NO NETBOOK
+- Diretiva do usuário: **"Vai usar meu celular não, faz uma vm Android aí, dá um jeito"** — fim do replug USB, transporte manual e testes no celular.
+- Sandbox da IA foi reciclado e apagou scripts/, rea-work/ e ponte-relay/ → reconstruídos do repo ponte-local (RESTAURAR.md); relay v1.3.1 no ar, teste ponta a ponta lane test OK (run_command 6 ms); tokens novos. Detalhes: logs/2026-11-01_sandbox_reciclado_relay_reerguido.md
+- Agente do netbook morto (0 polls) → aguardando usuário rodar bloco de reconexão (v1.8.1, primeiro plano, token novo).
+- VM = root de fábrica → capturar files/.59bca860/ do APK ORIGINAL (sem run-as, sem watcher contra o relógio) → payload ~14,6 MB → parse → v9 (999 dias + Nowin/tamperProtect).
+- v9 continua sendo o alvo; v7/v8 seguem publicadas como referência.
 
 ## Estado atual
 - v8 PUBLICADA (release id 429680551): `RevHunter_v48_999dias_v8_debuggable.apk` (76.457.432 B)
