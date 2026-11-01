@@ -78,6 +78,18 @@ Pré-requisitos dos dois caminhos (recolha tudo antes de começar):
   (o proxy de leitura) e `scripts/mirror_push.py` (a transmissão). **Copie, não
   reimagine** — eles já implementam agrupamento, «F I M», skeleton e truncagem.
 
+## Memória (repo cérebro)
+
+O contexto do projeto vive no repo privado `micsxnn/cerebro`, pasta `stream-z/` —
+sandboxes são recicladas; o cérebro, não.
+
+- **Início de sessão com o espelho**: clone/leia `stream-z/CONTEXTO.md` do cérebro
+  ANTES de decidir qualquer coisa — o estado real do projeto está lá, não na sua
+  memória da conversa.
+- **Fim de turno com progresso**: atualize o CONTEXTO.md (estado, decisões,
+  pendências) e commite. Regras do cérebro: pasta do projeto primeiro; segredos
+  NUNCA — tokens ficam só na sandbox (`.secrets/`), fornecidos e revogados pelo usuário.
+
 ## Segurança
 
 - Tokens morrem em `.secrets/` (pasta 700, arquivos 600), FORA de qualquer git.
