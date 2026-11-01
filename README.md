@@ -34,5 +34,5 @@ cérebro/
 
 | pasta | o que é |
 |---|---|
-| `stream-z/` | espelho ao vivo do agente (site stream-z-ofc.vercel.app + skill «espelho») |
+| `stream-z/` | stream-z — transmissão ao vivo das falas do agente (site stream-z-ofc.vercel.app + skill «stream-z») |
 | `patch-rev-hunter/` | contexto histórico do RE do RevHunter (memória original deste repo) |

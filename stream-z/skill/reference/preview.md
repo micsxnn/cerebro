@@ -1,6 +1,6 @@
 # Caminho B — Viewer no preview da plataforma
 
-O espelho roda como um mini Next.js na sandbox: página estática + rota de API. O feed
+O stream-z roda como um mini Next.js na sandbox: página estática + rota de API. O feed
 continua no gist, então o histórico sobrevive a reciclagens de sessão.
 
 ## 1. Monte o projeto
@@ -9,7 +9,7 @@ Use o fluxo do fullstack-dev (Next.js). Depois:
 
 ```bash
 mkdir -p app/api/feed public
-cp /home/z/my-project/skills/espelho/assets/viewer.html public/mirror.html
+cp /home/z/my-project/skills/stream-z/assets/viewer.html public/mirror.html
 ```
 
 Crie `app/api/feed/route.ts`:
@@ -52,7 +52,7 @@ curl -s "https://is.gd/create.php?format=simple&url=https%3A%2F%2Fpreview-SEU-BO
 # → https://is.gd/xxxxxx
 ```
 
-Testado e funcionando (encurtando o próprio espelho): https://is.gd/vH1UBk.
+Testado e funcionando (encurtando o próprio stream-z): https://is.gd/vH1UBk.
 Limites: máx. 5 conexões simultâneas; se bater rate limit, espere ~1 minuto.
 
 **Reservas** (se o is.gd falhar, mesma sintaxe): `https://v.gd/create.php?format=simple&url=…`

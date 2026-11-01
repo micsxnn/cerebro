@@ -1,13 +1,16 @@
 ---
-name: espelho
-description: Espelho ao vivo — streama TODAS as falas do agente (incluindo narrativas intermediárias entre tool calls) para um site que o usuário acompanha em tempo real, ANTES de aparecerem no chat, com marcador «fim» no fim de cada turno. Use SEMPRE que o usuário pedir para trabalhar "com o espelho ligado", "no espelho", "me mostrando ao vivo", "streama pro site", "quero ver você trabalhando" ou qualquer acompanhamento em tempo real; também use para montar o ambiente do zero (gist + viewer + push) ou para reconectar/recuperar um espelho que parou de atualizar. Não serve para tarefas rápidas em que ninguém está assistindo — aí o uso é opcional.
+name: stream-z
+description: Stream-z — transmite ao vivo TODAS as falas do agente (incluindo narrativas intermediárias entre tool calls) para o site stream-z-ofc.vercel.app, ANTES de aparecerem no chat, com marcador «fim» no fim de cada turno. Use SEMPRE que o usuário pedir para trabalhar "com o stream-z ligado", "no stream-z", "me mostrando ao vivo", "streama pro site", "quero ver você trabalhando" ou qualquer acompanhamento em tempo real; também use para montar o ambiente do zero (gist + viewer + push) ou para reconectar/recuperar um stream-z que parou de atualizar. Não serve para tarefas rápidas em que ninguém está assistindo — aí o uso é opcional.
 ---
 
-# Espelho ao vivo (arquitetura stream-z)
+# stream-z — transmissão ao vivo
 
 O usuário acompanha seu trabalho em tempo real num site estático que lê um feed JSON.
 Você transmite cada fala para o feed ANTES de escrevê-la no chat — mesmo quando a
-plataforma travar, o espelho continua mostrando o que você está fazendo.
+plataforma travar, o stream-z continua mostrando o que você está fazendo.
+
+> **Nome oficial: stream-z** (site stream-z-ofc.vercel.app). Apelido antigo «espelho» —
+> mesmo serviço; se alguém disser "espelho", é esta skill aqui.
 
 ## Arquitetura
 
@@ -28,15 +31,15 @@ sem o `/api/feed` autenticado o viewer mostra feed velho.
 
 ## A REGRA DE OURO — operar vem antes de montar
 
-Se o espelho já existe (`.secrets/mirror.json` com `gist_id`, ou o usuário informou
+Se o stream-z já existe (`.secrets/mirror.json` com `gist_id`, ou o usuário informou
 o site/token), PULE a configuração e vá direto para "Operação".
 
-1. **Todo texto que você falar no chat vai PRIMEIRO pro espelho, verbatim, e DEPOIS
+1. **Todo texto que você falar no chat vai PRIMEIRO pro stream-z, verbatim, e DEPOIS
    aparece no chat.** Inclui narrativas intermediárias entre tool calls ("vou checar…",
-   "agora vou montar…"). Se um turno tem 6 falas, o espelho recebe as 6.
+   "agora vou montar…"). Se um turno tem 6 falas, o stream-z recebe as 6.
 2. **Ao TERMINAR cada turno**: `--kind fim --text "fim"` — desenha o marcador «F I M»
    que separa os turnos no site.
-3. **Mensagens do USUÁRIO nunca vão pro espelho** (privacidade).
+3. **Mensagens do USUÁRIO nunca vão pro stream-z** (privacidade).
 4. Push falhou? Repita. O viewer mostra banner "sem sinal" após 3 polls sem update —
    isso quase sempre significa que VOCÊ parou de transmitir.
 
@@ -44,7 +47,7 @@ o site/token), PULE a configuração e vá direto para "Operação".
 
 ```bash
 set -a && source /home/z/my-project/.secrets/tokens.env && set +a
-python3 /home/z/my-project/skills/espelho/scripts/mirror_push.py --kind agent --text "<sua fala EXATA>"
+python3 /home/z/my-project/skills/stream-z/scripts/mirror_push.py --kind agent --text "<sua fala EXATA>"
 ```
 
 | kind | quando usar |
@@ -61,8 +64,8 @@ símbolo «z» não se repete a cada parágrafo. É feature, não bug; não tent
 
 **PASSO 1 — pergunte ao usuário onde o viewer vai morar** (use exatamente esta pergunta):
 
-> Onde você quer ver o espelho: **(A) na Vercel** — link fixo, tipo
-> `espelho-z.vercel.app`, sobrevive a tudo — **ou (B) no preview da plataforma** —
+> Onde você quer ver o stream-z: **(A) na Vercel** — link fixo, tipo
+> `stream-z-ofc.vercel.app`, sobrevive a tudo — **ou (B) no preview da plataforma** —
 > mais rápido de subir, mas o link é gigante e muda a cada sessão?
 
 - Resposta **A → leia `reference/vercel.md`** e siga o passo a passo completo
@@ -83,7 +86,7 @@ Pré-requisitos dos dois caminhos (recolha tudo antes de começar):
 O contexto do projeto vive no repo privado `micsxnn/cerebro`, pasta `stream-z/` —
 sandboxes são recicladas; o cérebro, não.
 
-- **Início de sessão com o espelho**: clone/leia `stream-z/CONTEXTO.md` do cérebro
+- **Início de sessão com o stream-z**: clone/leia `stream-z/CONTEXTO.md` do cérebro
   ANTES de decidir qualquer coisa — o estado real do projeto está lá, não na sua
   memória da conversa.
 - **Fim de turno com progresso**: atualize o CONTEXTO.md (estado, decisões,
