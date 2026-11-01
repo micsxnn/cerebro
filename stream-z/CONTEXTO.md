@@ -15,7 +15,10 @@ sobrevive.
 - Gist (banco do feed, secreto): d4a65c3257c3520a5090c327262f281b
   (o id já é público no feed.js do repo; escrever no feed exige token — que NUNCA
   fica salvo aqui)
-- Skill local: /home/z/my-project/skills/stream-z — snapshot em ./skill/
+- Skill CANÔNICA: o próprio repo https://github.com/micsxnn/stream-z (SKILL.md na
+  raiz, padrão Agent Skills — instalar é `git clone https://github.com/micsxnn/stream-z
+  <pasta-de-skills>/stream-z`). Instância local: /home/z/my-project/skills/stream-z;
+  snapshot histórico em ./skill/
 
 ## Arquitetura (resumo)
 sandbox → mirror_push.py → PATCH no gist (feed.json = {"updated","items":[{t,k,x}]})
@@ -35,13 +38,21 @@ sandbox → mirror_push.py → PATCH no gist (feed.json = {"updated","items":[{t
   (skills/stream-z), site redeployado com título/marca stream-z, README do repo,
   scripts e snapshot ./skill/ atualizados. Nome antigo mantido só como nota
   histórica no SKILL.md.
+- Repo = skill (2026-11-02): SKILL.md na raiz do repo micsxnn/stream-z + assets/,
+  reference/ e evals/ — instalar a skill é um `git clone`; descrição do repo
+  atualizada (“skill de transmissão ao vivo…”); prova: clone limpo em /tmp rodou o
+  mirror_push.py do clone com sucesso. Site redeployado; SKILL.md acessível em
+  stream-z-ofc.vercel.app/SKILL.md.
 
 ## Como restaurar em sandbox nova
 1. Clone este cérebro e o repo stream-z.
 2. Tokens NUNCA estão salvos — peça ao usuário: GitHub (escopo gist) e, se for
    redeploy, Vercel (Full Account). Salve em /home/z/my-project/.secrets/tokens.env
    (chmod 600) e crie .secrets/mirror.json = {"gist_id": "<id acima>"}.
-3. Carregue a skill de skills/stream-z (ou restaure o snapshot ./skill/).
+3. Instale a skill clonando o repo canônico: `git clone
+   https://github.com/micsxnn/stream-z /home/z/my-project/skills/stream-z` (a pasta
+   já existe? `git -C` nela pull). Sem internet/repo indisponível? Restaure o
+   snapshot ./skill/.
 4. Siga a política: push verbatim ANTES do chat + «fim» no fim do turno
    (detalhes no SKILL.md da skill).
 
