@@ -36,3 +36,4 @@ cérebro/
 |---|---|
 | `stream-z/` | stream-z — transmissão ao vivo das falas do agente (site stream-z-ofc.vercel.app + skill «stream-z») |
 | `patch-rev-hunter/` | contexto histórico do RE do RevHunter (memória original deste repo) |
+| `ponte-local/` | Ponte Local — IA opera o PC do usuário pelo chat (estável público + beta privada + app desktop) |
