@@ -99,6 +99,13 @@ token vivo está no remote do beta e na `.env` da sandbox).
   execução real (abertura na tela, fechamento/exclusão do txt quando task
   nova entra). Pedir teste: abrir task, aguardar gap ou Ctrl+C e ver o
   relatório abrir.
+- **Lane celular: PRIMEIRA CONEXÃO REAL** — agente no Termux deu lastSeen
+  no relay, porém o processo parou de fazer poll ~1 min depois do boot
+  (Android congela Termux em background; sem `termux-wake-lock` ou sessão
+  em primeiro plano). Ping #123 + 1 comando ficaram pendentes na fila —
+  serão consumidos no próximo poll quando o usuário reabrir o Termux.
+  Lição: NO CELULAR o agente só vive com tela ligada/sessão aberta ou
+  wake-lock; esperar desconexões frequentes e fila acumulando (normal).
 
 ### Bancada de testes (scripts/ da sandbox)
 - `scripts/testa-relatorio.js` — 55 asserts (fatia real do agent.js, exec
