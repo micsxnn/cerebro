@@ -32,10 +32,9 @@ token vivo está no remote do beta e na `.env` da sandbox).
 ## Estado verificado (2026-11-03)
 
 ### Estável
-- Agente **v1.10.0** (commit `0df1b14`, pushed), SKILL.md **3.4.0**.
-- **Release v2.7.0 PUBLICADA**: https://github.com/micsxnn/ponte-local/releases/tag/v2.7.0
-  (v2.6.0 saiu antes no mesmo dia — lane por máquina, relatório v1.8.0, fix
-  spam, spinner/caixa v1.9.0, skill ETag v1.9.1, regra 12).
+- Agente **v1.10.1** (commit `8abd538`, pushed), SKILL.md **3.5.0**.
+- Releases hoje: **v2.6.0** (acumulado desde v2.5.2), **v2.7.0** (relatório
+  obrigatório + logo), **v2.7.1** (Termux + lane celular).
 - **v1.10.0 — RELATÓRIO OBRIGATÓRIO** (causa raiz do "relatório nunca sai":
   sem task_done o lote ficava aberto para sempre e fecharRelatorioAnterior
   nunca mais rodava):
@@ -44,72 +43,68 @@ token vivo está no remote do beta e na `.env` da sandbox).
     `fecharTarefa(null, true)` — relatório com resumo FACTUAL por tipo de
     operação (`resumoAutomatico` + `rotuloAcao`, rótulos PT-BR por ação);
   - Ctrl+C/SIGTERM com tarefa pendente gera relatório ANTES de sair
-    (`desligarComRelatorio`, trava `desligando` contra duplo sinal, exit
-    após 1,5 s no Linux / 2,5 s no Windows para o open disparar);
-  - cabeçalho do relatório ganhou linha "Fechamento:" (pela IA / automático);
-  - relatório anterior fecha na tela e txt é apagado quando tarefa nova
-    começa; se o open FALHOU, `relatorioEmTela=false` e o txt NÃO é apagado
-    (única cópia — caminho no log);
-  - **fix de corrida crítico**: o pkill/Stop-Process que fecha a janela
-    anterior matava o xdg-open/notepad do relatório NOVO (mesmo padrão
-    "relatorio-ponte") → "Sem app de texto disponível". Fix: contador
-    `matancaEditor`; `abrirNovo()` só nasce quando `matancaEditor === 0`;
-  - gravação do relatório agora atômica (escreveArquivoAtomico); Windows
-    ganhou `notepad.exe` como último fallback de open.
-- **v1.10.0 — LOGO PONTE AGENTE no boot**: 7 linhas em blocos █/░ com
-  reflexo, byte-a-byte IGUAL à arte do usuário (referência em
-  `scripts/logo-referencia.txt`; comparado por script). `terminalSuportaLogo()`:
-  win32 TTY + release >= 10 (Consolas) → arte; win32 sem TTY, Win7/8, locale
-  não-UTF (LC_ALL/LC_CTYPE/LANG), Linux TTY não-UTF → ASCII `P O N T E A G E
-  N T E`; Linux non-TTY → arte (UTF-8 em disco); terminal < 65 colunas
-  (LOGO_LARGURA=64) → ASCII. `montarBanner({unicode, largura})` é puro e
-  testável.
-- **v1.9.1 — auto-update da skill otimizado**: ETag/If-None-Match (304 = zero
-  bytes, `notModified:true`), escrita atômica, backoff até 15 min, aviso único
-  de falha/recuperação. Release v2.6.0 detalha.
-- **v1.9.0 — feedback visual no terminal**: spinner `rodando:` + caixa
-  `output`; `ativaVTWindows()` com re-leitura do bit (Win7 sem VT → ASCII).
-- **SKILL.md 3.4.0**: regra 9 reescrita (relatório inegociável garantido pelo
-  agente), seção do relatório com as garantias novas, banner documentado,
-  regra 12 (desinstalação TOTAL da skill antes de atualizar) desde a 3.3.0,
-  parágrafo duplicado da lane removido.
+    (`desligarComRelatorio`, trava `desligando`, exit após 1,5 s Linux /
+    2,5 s Windows);
+  - relatório anterior fecha na tela e txt é apagado quando a tarefa nova
+    começa; open falhou = txt PRESERVADO (única cópia);
+  - **fix de corrida crítico**: pkill/Stop-Process da janela anterior matava
+    o xdg-open do relatório NOVO → contador `matancaEditor`, open novo só
+    nasce com kill zerado;
+  - gravação do relatório atômica; Windows ganhou notepad.exe como fallback.
+- **v1.10.0 — LOGO PONTE AGENTE no boot**: 7 linhas █/░ byte-a-byte da arte
+  do usuário (referência `scripts/logo-referencia.txt`).
+  `terminalSuportaLogo()`: win32 TTY + release >= 10 → arte; Win7/8, sem TTY
+  (win), locale não-UTF, terminal < 65 colunas → ASCII.
+- **v1.10.1 — Termux/Android**: `executaraComando` usava `/bin/bash` fixo —
+  o Android NÃO tem /bin. Agora constante `BASH` resolve o primeiro
+  candidato existente: /bin/bash, /usr/bin/bash, /usr/local/bin/bash,
+  `$PREFIX/bin/bash` (Termux), caminho fixo do Termux, fallback "bash" via
+  PATH. Lixeira XDG do agente é fs puro — funciona no Termux sem nada.
+- **v1.9.1** ETag/304 + backoff na skill; **v1.9.0** spinner + caixa output.
+- **SKILL.md 3.5.0**: seção Termux (instalação, wake-lock, bateria,
+  termux-api, ~/storage/shared), regra 9 (relatório inegociável), regra 11
+  com 4 lanes, regra 12 (desinstalação total da skill), limites: 4 lanes.
+
+### Relay / app
+- **LANE NOVA: `celular`** — `LaneId` + `LANE_IDS` + `LANE_TOKENS`
+  (`PONTE_TOKEN_CELULAR` no .env da sandbox) + `lanesPadrao` no store; erro
+  de lane inválida agora dinâmico (`LANE_IDS.join("|")`); painel com aba
+  Celular. Commit `06e3d0b` na beta; estável recebe no próximo sync de relay.
+- **Bug da defesa de HMR no store** (pegou no ar): a defesa só conferia
+  netbook/windows/test — estado em memória criado ANTES da lane nova
+  sobrevive ao hot-reload do Next e `markSeen("celular")` dava 500. Fix:
+  `if (!s.lanes || LANE_IDS.some((id) => !s.lanes[id])) s.lanes =
+  lanesPadrao();` — genérica para lanes futuras.
+- **O relay RODA no APP PRINCIPAL** (`next dev -p 3000` da plataforma, rotas
+  em `src/app/api/ponte/*` + `src/lib/ponte-store.ts` + painel
+  `src/app/page.tsx`) — as cópias em `ponte-beta/relay/` são a fonte do
+  repo. Editar SEMPRE nos dois (editar repo, cp para src/). Mudanças no
+  store/painel recompilam sozinhas (hot reload); `.env` também é relido
+  (Next dev re-carrega) — token novo sem restart.
+- Auth: agentes via header `x-ponte-token`; admin via `x-ponte-admin`
+  (cmd/result-admin) ou `?admin=` (status/results). O POST /cmd COM header
+  Bearer NÃO autoriza.
+- Ciclo da lane celular testado de ponta a ponta com curl (cmd → poll →
+  result) — ok.
 
 ### Beta
-- Tag **v0.1.0-beta.9** enviada (commit `edb3c3e`) — CI construindo AppImage +
-  exe; `appVersion = "0.1.0-beta.9"`; agentes (`agente/` e `embedded/`)
-  byte-idênticos ao estável v1.10.0 (validado com cmp).
-- beta.8 (2814b8c): agente v1.9.1; beta.7: v1.9.0; beta.6: fix do spam;
-  beta.5: mensagens 410 + botão "Testar conexão".
+- Tag **v0.1.0-beta.10** enviada (commit `06e3d0b`) — agente v1.10.1
+  embutido + lane celular; beta.9 (edb3c3e): v1.10.0; beta.8: v1.9.1.
 
 ### Bancada de testes (scripts/ da sandbox)
-- `scripts/testa-relatorio.js` — NOVO, 55 asserts: fatia o código REAL do
-  agent.js (marcadores "relatório da tarefa" → "loop principal") com exec
-  capturado, plataforma comutável (Proxy) e exit interceptado; cobre resumo da
-  IA/automático/falhas/modos, fecharTarefa (sem lote, gravação, open falho →
-  preserva txt), garantirTarefaPara (nova/pausa longa), desligarComRelatorio
-  (Ctrl+C gerando antes de sair; duplo sinal ignorado), sobras, caminhos
-  Windows (powershell/start). Pegadinha: `new Function` não tem require no
-  escopo — passar como parâmetros; desligarComRelatorio com stub de process
-  via Proxy para interceptar exit.
-- `scripts/testa-logo.js` — NOVO, 23 asserts: LOGO === referência byte-a-byte,
-  invariantes (7 linhas, só █/░/espaço, 64 col), montarBanner art/ASCII por
-  largura e suporte, decisões do terminalSuportaLogo com plataforma/release/
-  locale controlados (slice do código real).
-- `scripts/testa-e2e-relatorio.py` — NOVO, 25 asserts PTY real: relay fake em
-  Python com fila agendada (sleep entre comandos), xdg-open FAKE no PATH
-  registrando aberturas, gap curto via env; cobre boot com logo, fechamento
-  automático na pausa, open na tela (abertos.log), task_done com resumo,
-  fechar+apagar na tarefa nova, Ctrl+C gerando relatório, terminal de 40
-  colunas em ASCII. winsize tem que ser aplicado ANTES do boot (openpty +
-  ioctl antes do Popen). Rodar ISOLADO de testa-e2e-pty (mesmo relay fake na
-  3199 / pasta /tmp/ponte-e2e — agente remanescente rouba comandos e gera
-  10 falhas falsas).
-- `scripts/testa-skill-update.js` — 39 asserts (ETag/304, atomic, backoff);
-  guarda de versão da SKILL.md atualizada para 3.4.0.
-- `scripts/testa-tela.js` (37), `testa-e2e-pty.py` (19), `testa-e2e-notty.py`
-  (7) — todos verdes com a v1.10.0.
-- Teste real contra o GitHub: 1a chamada baixa (200), 2a chamada 304 com
-  0 bytes — confirmado no raw de produção.
+- `scripts/testa-relatorio.js` — 55 asserts (fatia real do agent.js, exec
+  capturado, plataforma comutável, exit interceptado).
+- `scripts/testa-logo.js` — 23 asserts (LOGO === referência, decisões de
+  fallback com plataforma/release/locale controlados).
+- `scripts/testa-e2e-relatorio.py` — 25 asserts PTY real (relay fake em
+  Python com fila agendada, xdg-open fake no PATH, gap via env, Ctrl+C,
+  terminal de 40 colunas em ASCII). winsize ANTES do boot (openpty+ioctl).
+  Rodar ISOLADO de testa-e2e-pty (mesmo relay fake na 3199).
+- `scripts/testa-skill-update.js` — 39 asserts; guarda de versão 3.5.0.
+- `testa-tela.js` (37), `testa-e2e-pty.py` (19), `testa-e2e-notty.py` (7).
+- Teste real GitHub: 200 depois 304 com 0 bytes.
+- Teste do BASH do Termux: sandbox só prova a presença da lógica (PREFIX +
+  caminho fixo) — o caminho real depende do primeiro boot no celular.
 
 ## Aprendizados que valem ouro
 
@@ -120,6 +115,10 @@ token vivo está no remote do beta e na `.env` da sandbox).
   `tag_name` novo respondeu 422 ("tag_name is not a valid tag"). Receita que
   funciona: criar tag ANOTADA via git (`git tag -a vX.Y.Z <sha>`, push da
   tag) e depois POST `/releases` SEM `target_commitish` (HTTP 201).
+- **Token da API do GitHub**: o token do remote do ESTÁVEL falhou na API
+  (401 Bad credentials) mesmo com push funcionando (credential helper).
+  Para chamadas de API, extrair SEMPRE o token do remote da BETA
+  (`git config remote.origin.url` dentro de ponte-beta; 40 hex).
 - **raw.githubusercontent suporta ETag/304**: `If-None-Match` com o etag da
   resposta anterior → 304 com zero bytes (validado com curl antes de
   implementar).
@@ -148,21 +147,18 @@ token vivo está no remote do beta e na `.env` da sandbox).
 
 ## Pendências
 
-- **Usuário**: baixar a beta.9 (agente v1.10.0 com relatório obrigatório e
-  logo) ou copiar `agente/agent.js` do estável (release v2.7.0) para
-  `~/ponte-agent/agent.js` e religar com `--server URL --token TOKEN --save`.
+- **Usuário**: instalar o agente no CELULAR (Termux) — bloco de comandos
+  entregue no chat; falta só a URL do preview (só ele vê na interface).
+- **Usuário**: baixar a beta.10 ou o agent.js da release v2.7.1 para o
+  netbook/Windows.
 - **Usuário**: colar a URL nova do preview + token no painel da beta e validar
   com "Testar conexão".
-- Conferir a release da beta.9 quando o CI terminar (assets AppImage + exe).
-- PAT do GitHub foi revogado; o token vivo atual está no remote do beta (padrão
-  já documentado acima).
-- Roadmap beta: janela nativa de setup, lixeira/undo no painel, toggle modo deus,
-  notificação no Windows.
-- Relatório obrigatório no Windows: lógica validada por testes unitários com
-  plataforma comutada (powershell/start/notepad) e revisão linha a linha; não
-  há Windows na sandbox — primeira execução real no PC do usuário confirma.
-- O relatório de tarefa perdida em QUEDA do agente (sem Ctrl+C, sem gap) não é
-  reconstruído do ponte-log.jsonl — limite conhecido aceito por agora.
+- Quando o celular conectar: validar specs no /status (`lanes.celular`) e o
+  primeiro run_command real (ex.: termux-battery-status).
+- PAT do GitHub revogado; token vivo no remote da BETA (usar para API).
+- Roadmap: abrir relatório no Android com termux-open (adicionar à lista do
+  abrirNoNavegador quando TERMUX detectado), janela nativa de setup, lixeira/
+  undo no painel, toggle modo deus, notificação no Windows.
 
 ## Regras permanentes do projeto
 
