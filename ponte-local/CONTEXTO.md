@@ -91,10 +91,38 @@ token vivo está no remote do beta e na `.env` da sandbox).
 - Tag **v0.1.0-beta.10** enviada (commit `06e3d0b`) — agente v1.10.1
   embutido + lane celular; beta.9 (edb3c3e): v1.10.0; beta.8: v1.9.1.
 
+### CELULAR VALIDADO EM PRODUCAO (2026-11-03, screenshot + testes reais)
+
+- **ARQUITETURA DOS RELAYS (IMPORTANTE)**: a URL do preview do usuario
+  (`https://y1t9p98r0dg1-d.space-z.ai`, formato `<id>-d.space-z.ai`) aponta
+  para uma INSTANCIA DA PLATAFORMA DIFERENTE do next dev da sandbox da IA
+  (`127.0.0.1:3000` tem uptime/contadores proprios). O MESMO
+  PONTE_ADMIN_TOKEN do .env funciona nas DUAS (config compartilhada).
+  **Para operar as maquinas do usuario, falar com o relay do PREVIEW**
+  (URL que o usuario informa; muda quando a sessao dele recicla). As lanes
+  no relay local da sandbox ficam vazias — e normal.
+- **Ciclo completo Android REAL confirmado**: cmd (preview) → poll →
+  result, tudo no Termux. Ping respondeu: ponte-agent/1.10.1, android
+  arm64, kernel 4.14.199, Node v24.17.0, RAM 3.44 GB, usuario u0_a454,
+  modo autonomo, escopo home do Termux, skill 3.5.0 (o AUTO-UPDATE DA
+  SKILL RODOU NO ANDROID e se atualizou sozinho do raw).
+- **run_command no Termux: exitCode 0, 325ms** — `uname -a; whoami;
+  echo $PREFIX; bash --version` rodou via bash 5.3.9 do Termux: o
+  resolver de BASH da v1.10.1 ($PREFIX/bin/bash) CONFIRMADO em Android
+  real. ATENCAO: o campo do args e `command` (nao `cmd`) — campo errado
+  da erro "Comando vazio".
+- **Screenshot prova**: LOGO byte-identica renderizou no Termux; banner
+  com modo/escopo/protecoes; "Conectado a ponte" 2x; Ctrl+C → "Ponte
+  encerrada" (desligarComRelatorio rodou). Config salva correta
+  (server/token/home, run:true, auto:true).
+- **Backlog cosmético mobile**: os.cpus() vazio no Android → ping mostra
+  "0x ?" (fallback: ler /proc/cpuinfo ou rotulo "android"); relatorio
+  poderia usar termux-open quando TERMUX (já no roadmap).
+
 ### Confirmação em execução real (usuário, 2026-11-03)
-- **LOGO PONTE AGENTE: CONFIRMADA pelo usuário** ("abriu lindamente") em
-  execução real na máquina dele. Pendente saber terminal/OS exato (Windows?
-  netbook Linux?), mas a arte byte-idêntica apareceu como esperado.
+- **LOGO PONTE AGENTE: CONFIRMADA pelo usuário** — e o screenshot do
+  Termux prova: era no CELULAR (Android) que a arte byte-idêntica abriu
+  "lindamente".
 - **Relatório obrigatório: ainda SEM confirmação explícita** do usuário em
   execução real (abertura na tela, fechamento/exclusão do txt quando task
   nova entra). Pedir teste: abrir task, aguardar gap ou Ctrl+C e ver o
@@ -184,10 +212,12 @@ token vivo está no remote do beta e na `.env` da sandbox).
 
 ## Pendências
 
-- **Usuário**: instalar o agente no CELULAR (Termux) — bloco de comandos
-  entregue no chat; falta só a URL do preview (só ele vê na interface).
+- ~~Instalar o agente no CELULAR~~ **CUMPRIDA E VALIDADA** (ver bloco
+  "CELULAR VALIDADO EM PRODUCAO"): ligado, operante, run_command ok.
+- **Usuário**: confirmar o RELATÓRIO em execução real (abertura na tela,
+  fechamento/exclusão do txt) no PC/netbook.
 - **Usuário**: baixar a beta.10 ou o agent.js da release v2.7.1 para o
-  netbook/Windows.
+  netbook/Windows e colar a URL do preview + token no painel.
 - **Usuário**: colar a URL nova do preview + token no painel da beta e validar
   com "Testar conexão".
 - Quando o celular conectar: validar specs no /status (`lanes.celular`) e o
