@@ -218,6 +218,13 @@ token vivo está no remote do beta e na `.env` da sandbox).
   run_command pro PREVIEW (URL hardcoded lá dentro) e espera o resultado
   NOVO (sincroniza cursor antes de enfileirar); cursor em `/tmp/cel_since`
   morre ao reciclar sandbox.
+- **Demo do spinner (aprendizado)**: a ação `ping` NÃO desenha bolinha
+  (handler só monta specs; o spinner genérico pula ping/task_done) — quem
+  desenha é o run_command. Com 1.10.1 em memória, comando instantâneo não
+  dá pra ver; comando de 1-2s mostra a bolinha girando (redraw 110ms).
+  Série de 5 pings ICMP rodou linda no moto e32: 8.8.8.8 34ms, 1.1.1.1
+  45ms, google.com (DNS+ICMP) 103ms, RELAY 372ms (borda HK), 8.8.8.8 x3
+  37ms. Termux tem ping nativo funcionando sem root (SOCK_DGRAM).
 
 ### Bancada de testes (scripts/ da sandbox)
 - `scripts/testa-relatorio.js` — 55 asserts (fatia real do agent.js, exec
