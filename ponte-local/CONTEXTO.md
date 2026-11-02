@@ -183,6 +183,42 @@ token vivo está no remote do beta e na `.env` da sandbox).
   Radar no layout.tsx (capturaHostDeHeaders) continua de pé: se o painel
   abrir com token, o /api/ponte/status pode revelar o domínio verdadeiro.
 
+### Testes padrão Android no moto e32 (2026-11-03, via lane celular)
+- **Abrir app funciona de 3 formas**: `am start -a android.settings.SETTINGS`
+  (Ajustes), `am start -a android.intent.action.VIEW -d URL` (navegador),
+  `am start -n ru.zdevs.zarchiver/.ZArchiver` (app direto por componente).
+  **monkey -p FALHA** ("Unable to connect to window manager") e `wm size`/
+  `wm density`/`cmd package resolve-activity` FALHAM ("Can't find service:
+  window") — ferramentas exclusivas do uid shell. `termux-open` arquivo
+  txt: exit 0, abre no visualizador. `dumpsys` indisponível (já sabido).
+- **Apps de terceiros no aparelho: só 3** — ZArchiver, com.sameerasw.essentials,
+  com.termux (`pm list packages -3` funciona sem root).
+- **FBE CONFIRMADO**: `ro.crypto.state=encrypted`, `ro.crypto.type=file`
+  (Android 11 SDK 30). Contexto SELinux do Termux: `u:r:untrusted_app:s0:c198...`.
+- **Muros de permissão mapeados (sem root)**: `/sdcard/Android/data` =
+  Permission denied (scoped storage A11+); o do próprio app
+  (`/sdcard/Android/data/com.termux/files`) lista vazio sem erro;
+  `/data/data` nem lista, e pasta de OUTRO app responde "No such file"
+  (FBE esconde que ela existe); própria sandbox (`/data/data/com.termux`)
+  acessível; `/data/local/tmp` e `/data/misc` denied; `/data/system` DEIXA
+  LISTAR mas conteúdo é FBE (cat packages.xml = Permission denied);
+  `su` = shim do Termux nega ("No su program found"); sdcard sem pastas
+  ocultas (glob `.[!.]*` vazio) — dotfolders do home do Termux (.config,
+  .bash_history) normais e legíveis (é a sandbox própria).
+- **SPINNER "QUE NÃO APARECE" — RESOLVIDO**: disco do celular JÁ É 1.10.3
+  (95149 bytes, `cmp` IDÊNTICOS ao raw do repo; baixei agent.js.novo via
+  curl NO CELULAR e comparei). O processo em memória reporta 1.10.1
+  (ligou antes da atualização) — sem o `spinnerGaranteMinimo` (600 ms) da
+  1.10.2, ações de 13 ms ligam/desligam o girador rápido demais pro olho.
+  FIX: usuário dar Ctrl+C e religar o agente no Termux. Nada quebrado.
+- Detalhe Node 24: `node --check arquivo.ext` com extensão não .js/.mjs/
+  .cjs estoura ERR_UNKNOWN_FILE_EXTENSION (meu teste com .novo falhou por
+  isso; o arquivo em si estava íntegro).
+- **Helper novo na sandbox**: `scripts/cel.py "comando" [timeout]` — manda
+  run_command pro PREVIEW (URL hardcoded lá dentro) e espera o resultado
+  NOVO (sincroniza cursor antes de enfileirar); cursor em `/tmp/cel_since`
+  morre ao reciclar sandbox.
+
 ### Bancada de testes (scripts/ da sandbox)
 - `scripts/testa-relatorio.js` — 55 asserts (fatia real do agent.js, exec
   capturado, plataforma comutável, exit interceptado).
@@ -241,6 +277,9 @@ token vivo está no remote do beta e na `.env` da sandbox).
 
 - ~~Instalar o agente no CELULAR~~ **CUMPRIDA E VALIDADA** (ver bloco
   "CELULAR VALIDADO EM PRODUCAO"): ligado, operante, run_command ok.
+- **Usuário**: reiniciar o agente no celular (Ctrl+C + religar no Termux) —
+  disco já é 1.10.3, memória é 1.10.1; após reiniciar o spinner (600 ms)
+  aparece e o ping passa a reportar 1.10.3.
 - **Usuário**: confirmar o RELATÓRIO em execução real (abertura na tela,
   fechamento/exclusão do txt) no PC/netbook.
 - **Usuário**: baixar a beta.10 ou o agent.js da release v2.7.1 para o
