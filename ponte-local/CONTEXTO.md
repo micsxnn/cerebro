@@ -32,14 +32,23 @@ token vivo está no remote do beta e na `.env` da sandbox).
 ## Estado verificado (2026-11-03)
 
 ### Estável
-- Agente **v1.10.2** (commit `f0b96af`, release **v2.7.2**), SKILL.md **3.5.0**.
-  **v1.10.2 — spinner com duracao minima visivel (SPIN_MINIMO_MS 600ms)**:
-  acoes instantaneas (list/read 13-40ms) ligavam e desligavam o girador
-  antes do olho captar — usuario achava que o spinner "nao existia" no
-  Termux. Fix: `spinnerGaranteMinimo()` await antes do spinnerFim nos 3
-  pontos (run_command autonomo, supervisionado e finally do
-  processCommand). Exportado pra testes. Beta.11 (a44ef8b) leva o mesmo
-  agente embutido (byte-idêntico, cmp ok).
+- Agente **v1.10.3** (commit `3eb6282`, release **v2.7.3**), SKILL.md **3.5.0**.
+  **v1.10.3 — caixa de output com WRAP, nunca truncar** (bug reportado pelo
+  usuário no Termux: `free -h` truncava com "…" e a moldura desalinhava):
+  (1) `quebraLargura(txt, larg)` quebra no espaço (hard break em palavra
+  dura) e continua na linha seguinte DENTRO da moldura; (2) largura total
+  da caixa = larguraTerminal() - 2 (era exatamente L — preencher a última
+  coluna ativa o wrap automático do terminal e desalinha a moldura);
+  (3) cap de linhas conta LINHAS VISUAIS pós-wrap; separador stderr
+  mantido em interna-7 (o `├─` já conta o primeiro traço — quase introduzi
+  off-by-one). Bancada NOVA: `scripts/testa-wrap.js` (~45 asserts: 3
+  larguras, integridade de conteúdo, palavra dura, tabs) + guarda do
+  testa-tela.js S3 atualizado pra L-2. Tela/relatório/logo/e2e-pty verde.
+  Beta.12 (13b9a57) leva o agente embutido byte-idêntico (cmp ok).
+- Agente **v1.10.2** — spinner com duracao minima visivel (SPIN_MINIMO_MS
+  600ms): acoes instantaneas ligavam e desligavam o girador antes do olho
+  captar (usuario achava que o spinner "nao existia" no Termux).
+  `spinnerGaranteMinimo()` await antes do spinnerFim nos 3 pontos.
 - Agente **v1.10.1** (commit `8abd538`, pushed), SKILL.md **3.5.0**.
 - Releases hoje: **v2.6.0** (acumulado desde v2.5.2), **v2.7.0** (relatório
   obrigatório + logo), **v2.7.1** (Termux + lane celular).
