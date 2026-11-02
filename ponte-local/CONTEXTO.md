@@ -106,6 +106,14 @@ token vivo está no remote do beta e na `.env` da sandbox).
   serão consumidos no próximo poll quando o usuário reabrir o Termux.
   Lição: NO CELULAR o agente só vive com tela ligada/sessão aberta ou
   wake-lock; esperar desconexões frequentes e fila acumulando (normal).
+- **RADAR DE URL PÚBLICA no relay** (commit `b6edbd1` beta, espelhado no
+  app vivo): `src/lib/ponte-host.ts` captura `x-forwarded-host` (não-local)
+  em status e poll, guarda o ÚLTIMO visto em globalThis e o status-admin
+  devolve `hostPublico: {host, proto, haSegundos}`. Motivo: usuário não
+  sabe onde achar a URL do preview; ao ABRIR o painel (ou o celular
+  conectar), a URL aparece no status e a IA lê com curl. Fontes que NÃO
+  deram a URL: /app/zcode-driver (inacessível), env de processos (política).
+  Repo beta tem os 3 arquivos espelhados (ponte-host.ts na raiz do relay).
 
 ### Bancada de testes (scripts/ da sandbox)
 - `scripts/testa-relatorio.js` — 55 asserts (fatia real do agent.js, exec
