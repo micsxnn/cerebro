@@ -91,6 +91,15 @@ token vivo está no remote do beta e na `.env` da sandbox).
 - Tag **v0.1.0-beta.10** enviada (commit `06e3d0b`) — agente v1.10.1
   embutido + lane celular; beta.9 (edb3c3e): v1.10.0; beta.8: v1.9.1.
 
+### Confirmação em execução real (usuário, 2026-11-03)
+- **LOGO PONTE AGENTE: CONFIRMADA pelo usuário** ("abriu lindamente") em
+  execução real na máquina dele. Pendente saber terminal/OS exato (Windows?
+  netbook Linux?), mas a arte byte-idêntica apareceu como esperado.
+- **Relatório obrigatório: ainda SEM confirmação explícita** do usuário em
+  execução real (abertura na tela, fechamento/exclusão do txt quando task
+  nova entra). Pedir teste: abrir task, aguardar gap ou Ctrl+C e ver o
+  relatório abrir.
+
 ### Bancada de testes (scripts/ da sandbox)
 - `scripts/testa-relatorio.js` — 55 asserts (fatia real do agent.js, exec
   capturado, plataforma comutável, exit interceptado).
