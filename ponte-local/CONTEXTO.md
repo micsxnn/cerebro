@@ -32,21 +32,45 @@ token vivo está no remote do beta e na `.env` da sandbox).
 ## Estado verificado (2026-11-03)
 
 ### Estável
-- Agente **v1.8.1** (commit `21021cc`, pushed), SKILL.md **3.1.1**.
-- **Bug do spam "Skill atualizada" resolvido**: o `versaoDe()` recebia a versão
-  pelada (`3.1.1`, retorno de `versaoSkillLocal()`) mas o regex só aceitava o
-  marcador `skill-version: X.Y.Z` do arquivo baixado — a comparação nunca casava
-  e o agente regravava a SKILL.md e logava "Skill atualizada v3.1.1 → v3.1.1" a
-  cada 60 s. Fix: `versaoDe()` aceita também versão pelada (`v?X.Y.Z` sozinha).
-  Igual = silêncio; só loga quando `versaoMaisNova(remota, local)` é verdade.
+- Agente **v1.9.0** (commit `eb147b1`, pushed), SKILL.md **3.2.0**.
+- **v1.9.0 — feedback visual no terminal**: spinner `rodando:` em toda ação
+  (braille no Linux, ASCII `|/-\` no Windows) e caixa `output` com
+  stdout/stderr/código ao fim de cada run_command. Módulo de tela no agent.js:
+  detecção TTY/VT, `spinnerInicio/Fim`, `caixaOutput`, hook no `log()` (limpa
+  e redesenha a linha do spinner) e no `processCommand` (spinner para ações de
+  arquivo; run_command cuida do próprio, depois do s/N).
+- **Windows sem dependências**: `ativaVTWindows()` liga
+  ENABLE_VIRTUAL_TERMINAL_PROCESSING via PowerShell + P/Invoke
+  (`-EncodedCommand` base64 UTF-16LE, zero dor de quoting) e RE-LÊ o bit antes
+  de aceitar (Win7/8 rejeita o flag — sem a re-leitura o agente imprimiria
+  lixo). Sem VT: `\r` + padding e caixa ASCII. Sem TTY (redirecionado/app):
+  spinner desligado, caixa sai igual.
+- `log()` agora escreve via `process.stdout.write` direto — `console.log`
+  tratava `%d`/`%s` do output do usuário como formato.
+- Bugs pegos nos testes: canto `┐` faltava no mapa de glifos (topo da caixa
+  fechava com `┘`), nota "mais N linhas" saía fora da caixa, VT falso-positivo
+  no Win7.
+- Bug do spam "Skill atualizada" (v1.8.1): o `versaoDe()` só aceitava o
+  marcador `skill-version:` e a comparação com a versão pelada nunca casava —
+  regravava e logava a cada 60 s. Fix: aceita versão pelada; igual = silêncio.
 
 ### Beta
-- Release **v0.1.0-beta.6** no ar (commit `ccd38ff`, CI verde, AppImage + exe).
-- beta.6 = mesmo fix do spam sincronizado em `agente/agent.js` e
-  `desktop/embedded/agent.js` + `appVersion = "0.1.0-beta.6"`.
-- beta.5 (anterior) trouxe: agente sempre loga falha de conexão (antes ficava
-  mudo na primeira falha), mensagens próprias para HTTP 410, e botão "Testar
-  conexão" no painel (`/api/test`: 401 = relay no ar, 410 = preview expirada).
+- Tag **v0.1.0-beta.7** enviada (commit `1ba9f3f`) — CI constrói AppImage +
+  exe; `appVersion = "0.1.0-beta.7"`; agentes (`agente/` e `embedded/`)
+  byte-idênticos ao estável (validado com cmp).
+- beta.6: fix do spam; beta.5: agente loga falha de conexão (mensagens para
+  HTTP 410) e botão "Testar conexão" no painel (`/api/test`: 401 = relay no
+  ar, 410 = preview expirada).
+
+### Bancada de testes (scripts/ da sandbox)
+- `scripts/testa-tela.js` — 37 asserts unitários (spinner VT/ASCII, caixa
+  box-drawing/ASCII, truncamento, OSC, %s/%d, larguras, script VT do Windows).
+- `scripts/relay-fake-e2e.js` — relay fake HTTP puro na 3199 (`RELAY_OUT_DIR`
+  configura a pasta de saída) com 4 comandos prontos.
+- `scripts/testa-e2e-pty.py` — agente REAL dentro de PTY real (`pty` da
+  stdlib; o `script -qec` do sandbox pendeu) — 19 asserts de bytes crus.
+- `scripts/testa-e2e-notty.py` — agente com stdout em arquivo — 7 asserts
+  (sem spinner, caixa intacta).
 
 ## Aprendizados que valem ouro
 
@@ -78,11 +102,13 @@ token vivo está no remote do beta e na `.env` da sandbox).
 
 ## Pendências
 
-- **Usuário**: baixar a beta.6 (ou copiar `agente/agent.js` v1.8.1 do estável
-  para `~/ponte-agent/agent.js` e religar com `--server URL --token TOKEN
-  --save`) para receber o fix do spam nas máquinas dele.
+- **Usuário**: baixar a beta.7 (agente v1.9.0 com spinner + caixa output) ou
+  copiar `agente/agent.js` do estável para `~/ponte-agent/agent.js` e religar
+  com `--server URL --token TOKEN --save`.
 - **Usuário**: colar a URL nova do preview + token no painel da beta e validar
   com "Testar conexão".
+- Release notes da beta.7 no GitHub (patch do corpo via API depois do CI, sem
+  emoji) — como foi feito na beta.5.
 - PAT do GitHub foi revogado; o token vivo atual está no remote do beta (padrão
   já documentado acima).
 - Roadmap beta: janela nativa de setup, lixeira/undo no painel, toggle modo deus,
