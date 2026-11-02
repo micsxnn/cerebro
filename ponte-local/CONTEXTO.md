@@ -114,6 +114,19 @@ token vivo está no remote do beta e na `.env` da sandbox).
   conectar), a URL aparece no status e a IA lê com curl. Fontes que NÃO
   deram a URL: /app/zcode-driver (inacessível), env de processos (política).
   Repo beta tem os 3 arquivos espelhados (ponte-host.ts na raiz do relay).
+- **Causa raiz do celular "conectado mas offline"**: a config do Termux
+  (`~/ponte-agent/ponte.config.json`) tinha o PLACEHOLDER LITERAL
+  `"server": "https://AQUI-A-URL"` — o bloco foi rodado sem trocar a URL.
+  O banner do agente sobe normalmente mesmo sem relay, o que engana.
+  Fix: `node ~/ponte-agent/agent.js --server "URL_REAL" --token <lanecelular> --save`.
+- **Limite do radar**: os `GET /` constantes no dev.log (~1/s) são health
+  check da PLATAFORMA via túnel interno (`ws-*.cn-hongkong-vpc.fcapp.run`,
+  exige header interno x-session-id; rejeita request externo sem ele) —
+  NÃO é a URL do preview e NÃO serve pro celular. O host real do preview
+  (preview-*.space-z.ai) não é observável pelos headers que chegam ao app;
+  a única fonte é a interface do chat ou o histórico do navegador.
+  Radar no layout.tsx (capturaHostDeHeaders) continua de pé: se o painel
+  abrir com token, o /api/ponte/status pode revelar o domínio verdadeiro.
 
 ### Bancada de testes (scripts/ da sandbox)
 - `scripts/testa-relatorio.js` — 55 asserts (fatia real do agent.js, exec
