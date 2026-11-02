@@ -32,6 +32,14 @@ token vivo está no remote do beta e na `.env` da sandbox).
 ## Estado verificado (2026-11-03)
 
 ### Estável
+- Agente **v1.10.2** (commit `f0b96af`, release **v2.7.2**), SKILL.md **3.5.0**.
+  **v1.10.2 — spinner com duracao minima visivel (SPIN_MINIMO_MS 600ms)**:
+  acoes instantaneas (list/read 13-40ms) ligavam e desligavam o girador
+  antes do olho captar — usuario achava que o spinner "nao existia" no
+  Termux. Fix: `spinnerGaranteMinimo()` await antes do spinnerFim nos 3
+  pontos (run_command autonomo, supervisionado e finally do
+  processCommand). Exportado pra testes. Beta.11 (a44ef8b) leva o mesmo
+  agente embutido (byte-idêntico, cmp ok).
 - Agente **v1.10.1** (commit `8abd538`, pushed), SKILL.md **3.5.0**.
 - Releases hoje: **v2.6.0** (acumulado desde v2.5.2), **v2.7.0** (relatório
   obrigatório + logo), **v2.7.1** (Termux + lane celular).
