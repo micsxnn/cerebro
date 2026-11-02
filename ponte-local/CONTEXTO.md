@@ -118,6 +118,16 @@ token vivo está no remote do beta e na `.env` da sandbox).
 - **Backlog cosmético mobile**: os.cpus() vazio no Android → ping mostra
   "0x ?" (fallback: ler /proc/cpuinfo ou rotulo "android"); relatorio
   poderia usar termux-open quando TERMUX (já no roadmap).
+- **Brincadeira guiada (mesmo dia) — TUDO PASSOU no moto e32**: dossiê via
+  run_command (motorola moto e32, Android 11 SDK 30, RAM 3.4 GB com 545 MB
+  livres, load ~8, uptime 6h); dumpsys battery BLOQUEADO no Android 11 sem
+  root (bateria só via termux-api); termux-api NÃO instalado (toast/
+  notificação/bateria indisponíveis — futuro: pkg install termux-api + app
+  do F-Droid); fluxo de ARQUIVOS 100%: write_text criou
+  ~/ponte-agent/../cartao-ponte.txt (168 bytes), read_text leu íntegro,
+  list mostrou a home (7 itens: downloads, kit-simulador-unitv, storage,
+  .bash_history, cartao-ponte.txt); ls ~/storage/shared FUNCIONOU (raiz do
+  armazenamento Android listável — termux-setup-storage foi feito).
 
 ### Confirmação em execução real (usuário, 2026-11-03)
 - **LOGO PONTE AGENTE: CONFIRMADA pelo usuário** — e o screenshot do
