@@ -1,37 +1,42 @@
 # AgentForge
 
-Plataforma open source de agentes com IA — projeto do `lucasgabrieldevgg` (amigo do usuário), com colaboração do `micsxnn`.
+Plataforma open source de agentes com IA — projeto do `lucasgabrieldevgg` (amigo do usuário), com colaboração do `micsxnn`. Coordenação numa "Sala de Agentes" (saladeagentes.vercel.app/?s=AG-KMN3T7): líder Z.ai + Agente 1 (Z, eu).
 
 ## Links e IDs importantes
 
 - Repo público: https://github.com/lucasgabrieldevgg/agentforge (MIT, branch `main`)
-- Demo ao vivo: https://agentforge-blue-zeta.vercel.app
-- Versão: 0.22.1 (`package.json`)
-- Stack: Next.js 16 (App Router/Turbopack), TypeScript 5, Tailwind CSS 4 + shadcn/ui, Prisma 6 (SQLite em dev, Postgres/Supabase em prod), Zustand, OpenRouter; CI em `.github/workflows/ci.yml`
-- Push feito com token do `micsxnn` (colaborador) — NUNCA registrar o token aqui
+- Branch de trabalho do app local: `feat/local-v0.1-appimage` (daemon Bun + supervisor + tools + AppImage)
+- Minha branch (F5): **`feat/agente1-search`** (commit `da90c2b`)
+- Demo web: https://agentforge-blue-zeta.vercel.app · App local: daemon na :3199, AppImage 48MB
+- Sala: AG-KMN3T7 (Firebase RTDB por trás; reporta-se por TAREFA/FEITO/BLOQUEIO/DECISÃO)
+- Plano v0.2 (contrato de divisão): doc `07-plano-v02.md` anexado na sala
+- Push com token do `micsxnn` (colaborador) — NUNCA registrar o token aqui
 
-## Estado atual (2026-11-02, fuso America/Cuiaba)
+## Estado atual (2026-11-02/03, fuso America/Cuiaba)
 
-- Commit `7a5eafe` na main do agentforge: "docs: restructure README and README.pt-BR" (a partir de `046302e`), push confirmado e conteúdo verificado ao vivo (EN e PT-BR).
-- `README.md` (EN) e `README.pt-BR.md` reescritos e espelhados: tom profissional, SEM emojis, header centralizado (logo `public/logo.svg` + badges CI/MIT/versão/stack/demo), ordem: Sobre → Funcionalidades → Stack → Quick start → Docker → Configuração → Uso → Deploy → Modo demo → Estrutura → CI → Contribuir → Licença → Agradecimentos.
-- Correções incluídas: header duplicado no `README.pt-BR.md`; indentação quebrada na árvore de estrutura; indicadores da tabela de env viraram texto (Sim/Não); seção "Identidade — FORJA" condensada numa linha da seção Sobre; tabela de stack em formato tabela; link para `docs/DEPLOY-SUPABASE.md` adicionado.
-- Cópia dos dois READMEs salva na sandbox em `/home/z/my-project/download/` (efêmera, não é backup).
+### Sessão A — READMEs do agentforge (fechada)
+- Commit `7a5eafe` na main: README.md + README.pt-BR.md reescritos (profissional, sem emojis, header com logo/badges). Corrigidos: header duplicado no PT-BR, árvore quebrada, flags na tabela de env.
 
-## Decisões tomadas
-
-- Badges shields.io mantidos: são imagem, não emoji — padrão em README profissional.
-- Nada inventado: todo o conteúdo factual (features, env vars, comandos, limites da demo) veio dos READMEs e do código existentes.
-- Seção "Projetos relacionados" citando o Cérebro: proposta ao usuário, sem resposta ainda — não incluir sem ok.
+### Sessão B — Sala de agentes: tarefa F5 (fechada com ressalva de canal)
+- Onboarding recebido da líder (doc 07-plano-v02.md): escopo Agente 1 = SÓ `local/src/tools/search.ts`, `search-impl.ts`, `search.test.ts`.
+- **F5 ENTREGUE**: 8 tools de busca (web_search DDG Lite c/ POST+fallback GET+detecção de bloqueio; arxiv_search; openalex_search; hn_search; stack_search; github_search; weather_lookup c/ geocoding; gdelt_search c/ timeout 20s justificado) + wikipedia_search mantida como referência. Zero deps, zero keys, timeout 10s, saída 12KB. PT-BR, Conventional Commits.
+- **Testes**: `bun test src/tools/search.test.ts` = 19 pass / 3 skip / 0 fail (22 testes; skips só por ambiente de datacenter: DDG egress instável, OpenAlex cota de IP, GDELT throttle — pré-voo documentado no arquivo).
+- **Job real no daemon (aceite 4.4-2)**: job `done` em 3 iterações — web_search com resultados REAIS do DuckDuckGo (1. Bun — bun.sh), wikipedia_search de 2ª fonte, declare_done com as fontes. LLM via AGENTFORGE_MOCK_SCRIPT (mecanismo do daemon p/ testes); as tools rodaram rede de verdade.
+- **Push**: branch `feat/agente1-search` no repo público (da90c2b) ✓
+- **BLOQUEIO DE CANAL (não é do trabalho)**: desde ~04:05 (hora da sala) TODA escrita no Firebase da sala virou PERMISSION_DENIED (site mostra "não foi: set"; probes diretos em msgs/ e fora da sala idem; leitura OK; o app nem carrega firebase-auth). Meus relatos de 02:59 (BLOQUEIO/onboarding) e 03:44 (TAREFA/assumi F5) passaram — as rules mudaram no servidor no intervalo, perto do FEITO da líder às 04:01 (provavelmente via helper room.py com acesso elevado). Resultado: o FEITO do F5 não pôde ser postado na sala; a prova está no repo público.
 
 ## Como restaurar o ambiente numa sandbox nova
 
-1. Clone público: `git clone https://github.com/lucasgabrieldevgg/agentforge.git`
-2. Push exige token do `micsxnn` com acesso de colaborador (usuário fornece no chat; nunca persistir em arquivo).
-3. Commitar com identidade `micaelsan <167715159+micsxnn@users.noreply.github.com>`.
-4. Começar daqui: não refazer o que já está pronto (ver Estado atual).
+1. `git clone -b feat/local-v0.1-appimage https://github.com/lucasgabrieldevgg/agentforge agentforge-local && cd agentforge-local/local`
+2. Bun já no PATH do sandbox; `bun test src/tools/search.test.ts` (verde esperado; skips dependem da rede)
+3. Job real: script `/home/z/my-project/scripts/f5_real_job.sh` (sandbox efêmera — recriar se preciso)
+4. Sala: entrar com nome "Z" (identidade persiste em localStorage do agent-browser; pode sumir com a sandbox)
+5. Commitar com identidade `micaelsan <167715159+micsxnn@users.noreply.github.com>`
 
 ## Pendências
 
-- [ ] Decidir com o usuário sobre a seção "Projetos relacionados" (Cérebro) nos READMEs do agentforge.
-- [ ] Badge de versão é estático (0.22.1): atualizar manualmente a cada release ou migrar para badge dinâmico de releases.
-- [ ] Lembrar o usuário de revogar o token da sessão (ele já foi derrubado pelo GitHub uma vez durante o uso).
+- [ ] Postar o FEITO do F5 na sala quando a escrita voltar (texto pronto; ou o dono/líder relata via room.py) + líder revisar e integrar na branch principal.
+- [ ] Descobrir/reverter a mudança de rules do Firebase da sala (o dono é quem administra o projeto).
+- [ ] F4/F2 são da líder (browser do agente, providers diretos); minha próxima fatia: aguardar divisão.
+- [ ] Badge de versão do README é estático (0.22.1) — atualizar por release.
+- [ ] Lembrar o usuário de revogar o token usado nas sessões.
