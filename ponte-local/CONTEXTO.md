@@ -32,6 +32,20 @@ token vivo está no remote do beta e na `.env` da sandbox).
 ## Estado verificado (2026-11-03)
 
 ### Estável
+- Agente **v1.10.4** (commit `5fe3ae7`, release **v2.7.4**, beta.13 `045b9b7`)
+  — **largura REAL do terminal manda**: caixa de output, banner e spinner
+  medem a janela e se adaptam. CAUSA (usuário reportou no moto e32: a
+  "caixinha quebra se a janela for menor do que o esperado"): o piso de 40
+  colunas em `larguraTerminal()` forçava moldura de 38 cols em janela mais
+  estreita (Termux em pé com fonte maior). FIX: largura medida manda
+  (janela 30 = caixa 28, moldura íntegra, SÓ O TEXTO quebra dentro — pedido
+  exato do usuário); piso 20 só contra degenerescência; cap 100 em
+  ultra-wide; fallback 80 em pipe; TTY sem `columns` usa `getWindowSize()`.
+  Bancada: testa-wrap com cenário estreito (36/30/24/20 cols — moldura e
+  conteúdo íntegros) + cap + fallback; testa-tela S7 reescrito pra nova
+  regra (30=30, 15→piso 20, 300→cap 100). Tela/logo/relatório verde.
+  Instalado no DISCO do celular via curl (md5 `5486458a`, byte-idêntico,
+  backup `bak-1.10.3.js`); falta o usuário reiniciar o agente lá.
 - Agente **v1.10.3** (commit `3eb6282`, release **v2.7.3**), SKILL.md **3.5.0**.
   **v1.10.3 — caixa de output com WRAP, nunca truncar** (bug reportado pelo
   usuário no Termux: `free -h` truncava com "…" e a moldura desalinhava):
@@ -285,8 +299,9 @@ token vivo está no remote do beta e na `.env` da sandbox).
 - ~~Instalar o agente no CELULAR~~ **CUMPRIDA E VALIDADA** (ver bloco
   "CELULAR VALIDADO EM PRODUCAO"): ligado, operante, run_command ok.
 - **Usuário**: reiniciar o agente no celular (Ctrl+C + religar no Termux) —
-  disco já é 1.10.3, memória é 1.10.1; após reiniciar o spinner (600 ms)
-  aparece e o ping passa a reportar 1.10.3.
+  disco já é 1.10.4 (largura real do terminal), memória ainda é 1.10.1;
+  após reiniciar: spinner de 600ms, ping reporta 1.10.4 e a caixa nunca
+  mais estoura a janela (moldura adapta, só o texto quebra).
 - **Usuário**: confirmar o RELATÓRIO em execução real (abertura na tela,
   fechamento/exclusão do txt) no PC/netbook.
 - **Usuário**: baixar a beta.10 ou o agent.js da release v2.7.1 para o
