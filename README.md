@@ -7,7 +7,8 @@ sobrevive à reciclagem das sandboxes. Uma pasta por projeto; a raiz tem só est
 
 1. **Puxe contexto antes de trabalhar.** Vai mexer num projeto? Procure a pasta dele
    aqui, leia o contexto (começando pelo `CONTEXTO.md`) e continue DO estado salvo —
-   não refaça o que já está pronto e não invente estado.
+   não refaça o que já está pronto e não invente estado. Os comandos prontos estão
+   em **Como carregar o contexto**, logo abaixo.
 2. **Crie a pasta ANTES de guardar.** Projeto novo = crie a pasta com o nome do
    projeto (ex.: `stream-z/`) e só ENTÃO comece a guardar arquivos dentro dela.
 3. **Guarde o que importa** (dentro da pasta do projeto):
@@ -19,6 +20,28 @@ sobrevive à reciclagem das sandboxes. Uma pasta por projeto; a raiz tem só est
 5. **Segredo NUNCA.** Nem token, nem senha, nem chave — mesmo sendo repo privado.
    Referencie ONDE o segredo vive (ex.: `.secrets/` da sandbox) e lembre o usuário
    de revogar tokens no fim do projeto.
+
+## Como carregar o contexto
+
+O repo é público — **ler** não exige token nem login. Do jeito mais rápido pro mais completo:
+
+```bash
+# 1. Um arquivo só (raw):
+curl -fsSL https://raw.githubusercontent.com/micsxnn/cerebro/main/<projeto>/CONTEXTO.md
+
+# 2. Listar o que tem numa pasta (API):
+curl -fsSL https://api.github.com/repos/micsxnn/cerebro/contents/<projeto>
+
+# 3. Clonar tudo (quando for trabalhar de verdade no projeto):
+git clone --depth 1 https://github.com/micsxnn/cerebro
+```
+
+Ordem de leitura: `CONTEXTO.md` da pasta do projeto → arquivos de apoio que ele citar →
+seção «como restaurar o ambiente» dentro dele. Se o repo voltar a ficar privado, os
+mesmos comandos funcionam só acrescentando o header `Authorization: token $GH_TOKEN`
+(raw e API aceitam; no clone, use o token como senha:
+`git clone https://micsxnn:$GH_TOKEN@github.com/micsxnn/cerebro` — depois remova o token
+do remote com `git remote set-url origin https://github.com/micsxnn/cerebro`).
 
 ## Estrutura
 
